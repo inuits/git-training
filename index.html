@@ -113,12 +113,6 @@ And commit the files
 Git will ask you for a commit message.
 </section>
 <section data-markdown>
-Checking the state of the working copy
-
-    git status
-
-</section>
-<section data-markdown>
 Committing modified files.  
 Stage the files (more on that later):
 
@@ -166,7 +160,67 @@ commit will _not_ contain the changes in your working directory.
 
 **Only the changes that were added to the index will be in the commit**
 </section>
+<section>
+<img src="images/git-02.png" alt="">
+</section>
 <section data-markdown>
+If you add a file, or a part of a file, to the index, a copy is made of that
+file. When you commit, it is that copy which ends up in the commit.
+
+**Important**: if you make changes to the file after adding it to the index, those changes will 
+not end up in your commit, unless you add the file again to the index!
+
+If you modify files, you need to '_stage_' them again, by running `git add`.  
+
+You can also add only parts of a modified file:
+
+    git add -p myfile.txt
+
+**Tip**: use a tool for this
+</section>
+</section>
+
+<section>
+<section data-markdown>
+# Checking the state of your repository
+</section>
+<section data-markdown>
+Checking the state of the working copy
+
+    git status
+
+![status](images/status.png)
+</section>
+<section data-markdown>
+Seeing what has changed
+
+    `git diff`  
+    # shows the diff of your working copy
+
+    `git diff --cached`
+    # show the diff of your index
+
+**Tip**: use a tool for this
+</section>
+<section data-markdown>
+Checking the log of your current branch
+
+    git log
+
+![log](images/git-13.png)
+</section>
+<section data-markdown>
+`git log` has many options. For example:
+
+    git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+
+results in:
+![git-11](images/git-11.png)
+
+**Tip**: add this in your global gitconfig as an alias:
+
+    [alias]
+        l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative    
 </section>
 </section>
 

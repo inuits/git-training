@@ -5,3 +5,8 @@ code {
 strong {
   color: #E6DB74;
 }
+
+.reveal section img {
+  background: white;
+  border: 0;
+}
