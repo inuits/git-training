@@ -322,6 +322,238 @@ This will create a commit to undo everything introduced by &lt;commit-hash&gt;
 1. check the git log
 1. edit some more files and revert everything with `git reset --hard`
 </section>
+
+<section>
+<section data-markdown>
+# How Git stores data
+Knowing this gives you a better understanding of Git
+</section>
+<section data-markdown>
+A Git repository is a  
+**collection of objects**
+</section>
+<section data-markdown>
+## Types of objects
+* blobs
+* trees
+* commits
+* tags
+</section>
+<section data-markdown>
+## blobs
+Git stores the **contents of a file** in a 'blob'.
+
+* does not contain any meta data
+* a blob never changes
+* a hash is calculated as the blob name
+* the hash will always be the same for the same contents
+</section>
+<section data-markdown>
+some examples:
+
+    $ git hash-object hello.txt
+    ce6c1fd146f65c899e6b10e46c89097c644e3229
+    
+    $ git hash-object say-hi.rb
+    a8784b043f12b4b0c9114c55ebf33f5c9b44ce8f
+</section>
+<section data-markdown>
+## Trees
+A tree is a like a **directory**
+
+* Can contain references to 1 or more blobs
+* Can contain references to 0, 1 or more other trees
+* Contains the meta data about the files
+* Itself also identified by a hash
+</section>
+<section data-markdown>
+## Trees
+![git-03](images/git-03_2.png)
+</section>
+<section data-markdown>
+## Commits
+If you think about Git, think about commits!
+
+* Contains a reference to one tree object
+* Contains references to one or more other commits
+   * one exception: the very first commit in the repo
+* A commit usually points to it's parent commit
+* In case of a merge, it can point to two or more commits (one commit for each branch which you merged together)
+</section>
+<section data-markdown>
+## Commits
+
+![git-04](images/git-04.png)
+
+Did I mention that you should think in terms of commits, when working with Git?  
+
+If you understand commits, you basically understand Git.
+</section>
+<section data-markdown>
+## references ('refs')
+Because a commit hash is very difficult to remember and not really useful to work with, Git uses references to point to specific commits.
+</section>
+<section data-markdown>
+### HEAD
+One such reference is **HEAD**
+
+* It points to the commit which is currently checked out into your working directory
+</section>
+<section data-markdown>
+### master
+Another important reference is **master**
+
+* master is the 'default' branch in Git
+* when working on the master branch, the master reference and the HEAD reference point to the same commit
+</section>
+<section data-markdown>
+### special
+
+* **HEAD^ &amp; HEAD^^**: The commit before HEAD, two commits before HEAD
+* **master~7**: 7 commits before master reference
+</section>
+</section>
+
+<section>
+<section data-markdown>
+# Branches
+</section>
+<section data-markdown>
+## Branches
+references to other commits
+
+* very easy to create
+* a branch has a name
+* this name is also the reference to the most recent commit for that branch
+* a commit can be shared by branches
+</section>
+<section data-markdown>
+## Creating a branch
+First create the branch
+
+    git branch mywork
+
+Then start working on that branch:
+
+    git checkout mywork
+
+Or combine the two steps
+
+    git checkout -b mywork
+</section>
+<section data-markdown>
+## deleting a branch
+Deleting a local branch is also possible
+
+    git branch -d mywork
+</section>
+<section data-markdown>
+## branching
+* We are working on a branch named 'origin'
+* At commit C2 we decide to split off a new branch named 'mywork'.
+* Both branches originate from commit C2; commit C3 and C5 have the same parent
+</section>
+<section data-markdown>
+![git-05](images/git-05.png)
+</section>
+<section data-markdown>
+## merging
+When you have been working on a (feature) branch for a while you will probably want to merge those branches back together.
+
+    # to merge the origin branch back into your mywork branch (to bring it up to date)
+    # checkout the target branch
+    git checkout mywork
+    # merge the branch into the current branch
+    git merge origin
+</section>
+<section data-markdown>
+Now your repository looks like this: (Notice that commit C7 has two parents)
+
+![git-06](images/git-06.png)
+</section>
+<section data-markdown>
+## Merging
+
+When merging two or more branches there are two possibilities:
+
+* Merge commit
+* Fast Forward  
+</section>
+<section data-markdown>
+## Merge commit
+* When both branches have new commits a merge commit is created.
+* Git automatically proposes a commit message:  
+
+    `Merge branch 'mywork' into master`
+
+* The commit has two or more parents
+</section>
+<section data-markdown>
+## Fast Forward
+* When the target branch does not have new commits
+* No merge commit is created
+* In fact nothing much happens
+* Except: The reference for the target branch is simply changed to point the same commit as the source branch
+* This is an ideal situation and can never go wrong
+* Obviously you are not always this lucky (→ rebasing)
+</section>
+<section data-markdown>
+## Fast Forward
+
+![git-07-before](images/git-07-before.png)  
+Merge the 'mywork' branch into origin
+
+![git-07-after](images/git-07-after.png)  
+The origin branch is simply fast-forwarded
+</section>
+<section data-markdown>
+## Explicitly create merge commit
+Sometimes you want a merge commit, even when a simple Fast Forward is possible.
+
+    git merge --no-ff
+</section>
+</section>
+<section>
+<section data-markdown>
+# Rebasing
+Instead of merging (with merge commits) you can also rebase (so you can then fast forward)
+
+Some people will tell you that this is very harmful, it can break your repository and destroy the universe.  
+This is **NOT TRUE**. (At least if you know what you are doing)
+</section>
+<section data-markdown>
+## What is 'rebasing'?
+
+By rebasing your commits you can actually rewrite your history:
+
+* Edit a commit message
+* Add missing files to a commit
+* Reorder your commits
+* Modify the parent of a commit
+* Merge a few commits together into a single commit
+* Delete commits from the history
+* ...
+* And break your repository if you want :)
+
+</section>
+<section data-markdown>
+## How not to destroy your repository?
+</section>
+<section>
+<span style="font-size: 150%; ">Do <strong>not</strong> rebase commits which have already been pushed to other people</span>
+</section>
+<section>
+<span style="font-size: 150%; ">Do <strong>not</strong> rebase commits which have already been pushed to other people</span>
+</section>
+<section>
+<span style="font-size: 150%; ">Do <strong>not</strong> rebase commits which have already been pushed to other people</span>
+</section>
+<section data-markdown>
+Each commit which is rebased will get a new, different, hash. People (and Git) which pull this new hash will get confused.
+
+If you do rebase a commit which was already pushed, Git will refuse the new commit, unless you use the `--force` option.
+</section>
+</section>
       </div>
     </div>
 
