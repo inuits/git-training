@@ -512,6 +512,26 @@ Sometimes you want a merge commit, even when a simple Fast Forward is possible.
 
     git merge --no-ff
 </section>
+</section>
+
+<section data-markdown>
+## exercise 5
+1. Create a new branch and check it out
+1. Edit a file and commit
+1. Checkout the master branch
+1. Merge the file
+1. Edit files on both branches
+1. Merge both branches
+</section>
+<section data-markdown>
+## exercise 6
+1. Edit files on both branches, introducing conflicts
+1. Merge both branches
+1. Resolve the conflicts
+1. Commit
+</section>
+<section>
+
 <section data-markdown>
 ## Browsing an earlier commit
 You can checkout a commit to see the repository as it was back then
@@ -542,25 +562,15 @@ Useful when you make a mistake during rebasing, merging or resetting.
 
 Your old commits are not 'lost'. They are simply not used anymore and will be removed by `git gc` after a while.
 </section>
+<section data-markdown>
+## exercise
+1. edit a file
+1. commit
+1. reset to the previous commit
+1. use the reflog to find the newer commit
+1. reset back to the newer commit (no more changes)
 </section>
 
-<section data-markdown>
-## exercise 5
-1. Create a new branch and check it out
-1. Edit a file and commit
-1. Checkout the master branch
-1. Merge the file
-1. Edit files on both branches
-1. Merge both branches
-</section>
-<section data-markdown>
-## exercise 6
-1. Edit files on both branches, introducing conflicts
-1. Merge both branches
-1. Resolve the conflicts
-1. Commit
-</section>
-<section>
 <section data-markdown>
 # Rebasing
 Instead of merging (with merge commits) you can also rebase (so you can then fast forward)
