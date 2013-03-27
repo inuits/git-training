@@ -663,6 +663,137 @@ To rebase the most recent 3 commits:
 1. check the log
 1. Bonus: delete the merged branch
 </section>
+
+<section>
+<section data-markdown>
+# Sharing code
+</section>
+<section data-markdown>
+## Remotes
+To share work with other people, you can add one or more remotes
+
+* remotes have an address
+* remotes have a name
+* you can add multiple remotes to a repository
+</section>
+<section data-markdown>
+Easiest method to set this up is by cloning an existing repository instead of initializing your repo.
+
+    git clone http://git.drupal.org/project/drupal.git
+
+![git-14](images/git-14.png)
+
+This will set up everything for you
+</section>
+<section data-markdown>
+## Manually adding remotes
+
+Sometimes you will want to add a remote
+
+* Because you had already created the repository
+* Or maybe because you want to add one or more additional remotes
+
+</section>
+<section data-markdown>
+## Adding a remote
+This is done with the `git remote` command
+
+    git remote add github git@github.com:teranex/git-talk.git
+
+This will add my Github repository for this presentation as a remote with the name _github_
+</section>
+<section data-markdown>
+## Pulling and pushing
+
+When you have cloned the repository:
+
+    git pull
+
+This will pull in the changes from the current branch on the origin
+
+    git push
+
+Will push your changes to the origin
+
+**However**: This will only work for '_tracking_' branches.
+</section>
+<section data-markdown>
+## Remote Branches
+
+It is important to think about remote branches as just _branches_
+
+By default, Git does not know, nor care, about relationships between branches!
+</section>
+<section data-markdown>
+* local branch: **master**
+* remote ('github') branch: **github/master**
+* **Git just sees two branches**  
+
+    `git pull github master`  
+    `git push github master`
+
+* By default, no local branches are created for remote branches
+</section>
+<section data-markdown>
+## Remote Branches
+
+You can get a good overview of all your local and remote branches and how they are trakcing with:
+    git branch -avv
+
+![img-19](images/git-19.png)
+</section>
+<section data-markdown>
+## Tracking branches
+
+To create a local branch based on a remote branch:
+
+    git checkout --track -b mywork github/mywork
+
+To link an existing local branch to a remote branch:
+
+    git branch --setup-stream github/mywork
+
+You can verify this in the git config file (.git/config) in your repository:
+
+![git-15](images/git-15.png)
+</section>
+<section data-markdown>
+## Merging while pulling
+
+To better understand pulling, let's see what actually happens. Instead of using `git pull`, you also do (while on the master branch):
+
+    # pull in the new objects
+    git fetch github
+
+    # merge the remote branch with the local branch
+    git merge github/master
+
+This works exactly the same as merging two local branches!  
+</section>
+<section data-markdown>
+## Avoiding useless merge commits
+
+Merging a remote branch in your local branch can create a useless merge commit:
+
+![git-16](images/git-16.png)
+
+You can avoid this by rebasing instead of merging:
+
+    git pull --rebase
+
+or, if you want to do it manually:
+
+    git fetch github
+    git rebase github/master
+
+</section>
+</section>
+<section>
+## exercise 9
+1. Clone a repository
+1. Checkout a remote branch (you are now in a detached head state)
+1. Create a local branch for the remote branch
+</section>
       </div>
     </div>
 
