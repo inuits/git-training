@@ -243,6 +243,67 @@ See the log of all the branches:
 1. check the diff and diff --cached
 </section>
 
+<section>
+<section data-markdown>
+# Undoing things
+</section>
+<section data-markdown>
+## Undoing changes to a file
+
+    git checkout -- file.txt
+    # the -- are optional, to tell git it's about a file
+    git checkout directory/
+
+But **not**
+
+    git checkout branch-name
+</section>
+<section data-markdown>
+**Note**:
+This gets back the version from the **index**.
+If the file is not in the index, it will get the file from the repository.
+</section>
+<section data-markdown>
+## Resetting from the index
+To reset the file after it was added to the index:
+
+    git reset file.txt
+
+The working copy is now the version from the index and the file is not in the index anymore.
+Then you can use
+
+    git checkout file.txt
+
+To completely reset it to the version in the repository.
+</section>
+<section data-markdown>
+## Removing unversioned files
+
+    git clean -f
+    # to remove untracked files
+
+    git clean -f -d
+    # to remove untracked directories
+</section>
+<section data-markdown>
+## Completely resetting your working copy
+
+    git reset --hard
+
+    # optionally followed by
+    git clean -f
+
+**Use with care!**
+</section>
+<section data-markdown>
+## Reverting a commit
+After a commit was already pushed out to other people.
+
+    git revert <commit-hash>
+
+This will create a commit to undo everything introduced by &lt;commit-hash&gt;
+</section>
+</section>
       </div>
     </div>
 
