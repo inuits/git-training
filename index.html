@@ -513,6 +513,22 @@ Sometimes you want a merge commit, even when a simple Fast Forward is possible.
     git merge --no-ff
 </section>
 </section>
+<section data-markdown>
+## exercise 5
+1. Create a new branch and check it out
+1. Edit a file and commit
+1. Checkout the master branch
+1. Merge the file
+1. Edit files on both branches
+1. Merge both branches
+</section>
+<section data-markdown>
+## exercise 6
+1. Edit files on both branches, introducing conflicts
+1. Merge both branches
+1. Resolve the conflicts
+1. Commit
+</section>
 <section>
 <section data-markdown>
 # Rebasing
@@ -552,6 +568,78 @@ By rebasing your commits you can actually rewrite your history:
 Each commit which is rebased will get a new, different, hash. People (and Git) which pull this new hash will get confused.
 
 If you do rebase a commit which was already pushed, Git will refuse the new commit, unless you use the `--force` option.
+</section>
+<section data-markdown>
+## Amending changes
+
+* The easiest and 'safest' kind of rebase 
+* Only possible for the most recent commit
+* Let's you add missing files and modify the commit message  
+
+After modifying your index again:
+
+    git commit --amend
+
+</section>
+<section data-markdown>
+## Rebasing on top of another branch
+
+This is an alternative approach to merging, with a merge commit.
+
+Let's reuse the example:
+
+![git-05](images/git-05.png)
+
+Now you  want to merge 'mywork' into 'origin' without creating a merge commit
+
+</section>
+<section data-markdown>
+What we did before:
+
+    git checkout origin
+    git merge mywork
+
+What we will do now:
+
+    # on the mywork branch
+    git rebase origin
+    # fix any merge conflicts
+    git checkout origin
+    git merge mywork
+
+</section>
+<section data-markdown>
+
+    # on the mywork branch
+    git rebase origin
+
+![git-08](images/git-08.png)
+</section>
+<section data-markdown>
+![git-09](images/git-09.png)
+</section>
+<section data-markdown>
+![git-10](images/git-10.png)
+</section>
+<section data-markdown>
+## Interactive rebasing
+With interactive rebasing you can really rewrite history the way you want it to be. ...And break your repository.
+
+Rebase the commits since the specified commit-hash
+
+    git rebase --interactive &lt;commit-hash&gt;
+</section>
+<section data-markdown>
+Suppose we have the following commits
+
+![git-11](images/git-11.png)
+</section>
+<section data-markdown>
+To rebase the most recent 3 commits:
+
+    git rebase --interactive 4efd195
+
+![git-12](images/git-12.png)
 </section>
 </section>
       </div>
