@@ -512,7 +512,38 @@ Sometimes you want a merge commit, even when a simple Fast Forward is possible.
 
     git merge --no-ff
 </section>
+<section data-markdown>
+## Browsing an earlier commit
+You can checkout a commit to see the repository as it was back then
+
+    git checkout &lt;commit-hash&gt;
+
+**Note**: Git will tell you that you are in a _detached head_ state, because your HEAD reference
+doesn't point to any branch.
 </section>
+<section data-markdown>
+## Resetting to an earlier commit
+
+You can reset your branch to an earlier commit, to throw away the newer commit(s).
+
+    git reset HEAD^^
+
+This will change the reference for the branch to that commit
+
+**Note**: only do this if you have not yet pushed these newer commits
+</section>
+<section data-markdown>
+## Reflog
+The reflog is a log of everything which happened in your repository
+
+    git reflog
+
+Useful when you make a mistake during rebasing, merging or resetting.
+
+Your old commits are not 'lost'. They are simply not used anymore and will be removed by `git gc` after a while.
+</section>
+</section>
+
 <section data-markdown>
 ## exercise 5
 1. Create a new branch and check it out
@@ -871,6 +902,20 @@ I often use the stash when I want to `git pull --rebase`, while I have uncommitt
   Include `$(__git_ps1 '  %s  ')` in your $PS1
 ![tools-3](images/tools-3.png)
 </section>
+</section>
+
+<section data-markdown>
+# Suggested reading
+
+* the git man-pages
+* the .git-folder of a repository (just take a look, it's interesting)
+* Pro Git: [http://progit.org/](http://progit.org/)
+* The Git Community Book: [http://book.git-scm.com/](http://book.git-scm.com/)
+* StackOverflow: [http://stackoverflow.com](http://stackoverflow.com/questions/tagged/git) has a lot of valuable questions and answers related to Git.
+</section>
+
+<section data-markdown>
+# The end
 </section>
       </div>
     </div>
