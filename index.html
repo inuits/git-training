@@ -788,11 +788,89 @@ or, if you want to do it manually:
 
 </section>
 </section>
-<section>
+<section data-markdown>
 ## exercise 9
 1. Clone a repository
 1. Checkout a remote branch (you are now in a detached head state)
 1. Create a local branch for the remote branch
+</section>
+<section>
+<section data-markdown>
+# Stash
+</section>
+<section data-markdown>
+Sometimes you want to set aside your changes
+
+* because you want to rebase (which is not possible in a dirty repository)
+* to try alternative approaches
+* ...
+</section>
+<section data-markdown>
+## Stashing
+to stash everything
+
+    git stash
+
+Or you can give a description
+
+    git stash save "something fancy I was working on"
+
+</section>
+<section data-markdown>
+## Stashing
+to see the stashes
+
+    git stash list
+
+to get changes back from the stash
+
+    git stash pop
+</section>
+<section data-markdown>
+I often use the stash when I want to `git pull --rebase`, while I have uncommitted changes (git will refuse to do it in that case):
+
+    git stash
+    git pull --rebase
+    git stash pop
+</section>
+</section>
+
+<section data-markdown>
+## exercise 10
+1. make some edits
+1. stash them
+1. unstash them
+</section>
+
+
+<section>
+<section data-markdown>
+# Tools
+</section>
+<section data-markdown>
+## GUI tools
+
+* TortoiseSVN
+* Github for Windows
+* Giggle
+* Tig
+* Fugitive
+* IDE integration
+</section>
+<section data-markdown>
+## Giggle &amp; GitX: better looking, for Gnome &amp; Mac
+
+![git-17](images/git-17.png)
+</section>
+<section data-markdown>
+## Fugitive and gitv plugins for Vim
+![tools-2](images/tools-2.png)
+</section>
+<section data-markdown>
+## bash prompt information  
+  Include `$(__git_ps1 '  %s  ')` in your $PS1
+![tools-3](images/tools-3.png)
+</section>
 </section>
       </div>
     </div>
