@@ -895,7 +895,7 @@ I often use the stash when I want to `git pull --rebase`, while I have uncommitt
 <section data-markdown>
 ## GUI tools
 
-* TortoiseSVN
+* TortoiseGit
 * Github for Windows
 * Giggle
 * Tig
@@ -916,6 +916,137 @@ I often use the stash when I want to `git pull --rebase`, while I have uncommitt
   Include `$(__git_ps1 '  %s  ')` in your $PS1
 ![tools-3](images/tools-3.png)
 </section>
+</section>
+
+<section>
+<section data-markdown>
+# Git and Subversion
+
+Git has plugins available to migrate from and/or integrate into other versioning systems as well. One such plugin is **git-svn**.
+</section>
+<section data-markdown>
+## git-svn
+With git-svn you can:
+
+* migrate an existing subversion repository to a git repository, including all the history.
+* use Git locally to do your work, but push to a central Subversion server.
+</section>
+<section data-markdown>
+## Local Git, Subversion server
+To locally use Git and push to a central Subversion server:
+
+First 'clone' the Subversion repository into a local Git repo
+
+    git svn clone -s http://svn.example.com/myproject
+    # the -s means the subversion repo has a standard layout (trunk/ etc)
+</section>
+<section data-markdown>
+Now you can work as usual with your Git repository. Except... instead of running ``git pull`` to get the changes from other people, you now do:
+
+    git svn rebase
+
+And you don't do ``git push``, but:
+
+    git svn dcommit
+</section>
+</section>
+
+<section>
+<section data-markdown>
+# Git Flow
+</section>
+<section data-markdown>
+![git-20](images/git-20.png)
+</section>
+<section data-markdown>
+To use the '[Git Flow](https://github.com/nvie/gitflow)' branching strategy a Git plugin is available: git-flow. This plugin makes it really easy to follow Git Flow:
+
+First initialize it to configure the names. (I recommend to use the defaults)
+
+    git flow init
+</section>
+<section data-markdown>
+To start a feature branch:
+
+    git flow feature start my-exiting-feature
+
+To publish the feature (push it to the remote)
+
+    git flow feature publish my-exiting-feature
+
+To finalize the branch:
+
+    git flow feature finish my-exiting-feature
+</section>
+</section>
+
+<section>
+<section data-markdown>
+# Submodules
+In a Git repository you can 'link' other repositories to subdirectories. This can be useful, for example when using external libraries or when building your VIM configuration, to pull in all the plugins.
+</section>
+<section data-markdown>
+Similar to svn:externals, but not quite the same:
+
+* submodules must be registered in the repository
+* submodules must be pulled-in separately for each repo.
+* submodules are not updated automatically
+* submodules are not pushed automatically
+* a specific commit is referenced in the parent repo
+</section>
+<section data-markdown>
+## Add a submodule
+
+    # from the root of the repository
+    git submodule add git://path/to/repo path/in/repo
+
+This will modify the .gitmodules file, which is part of the parent repository, and record the exact commit which is checked out in the submodule.
+Now you can commit, push, etc.
+</section>
+<section data-markdown>
+## Pulling in submodules
+
+When another repository pulls in the change the following steps are required:
+
+    git submodule init
+
+This will update the .git/config file for that repository and register the submodule in the repository
+
+    git submodule update
+
+This will check-out all the submodules to the correct commit
+
+    # or combine both steps
+    git submodule update --init
+</section>
+<section data-markdown>
+## Updating submodules
+To update you can checkout another commit in the submodule (for example by pulling) and commit the reference to this new commit in the parent repository.
+
+To update all the modules, you can use something like:
+
+    git submodule foreach git pull origin master
+</section>
+</section>
+
+<section data-markdown>
+# Exercise
+
+1. Create a new repo with a commit
+1. Add it as a submodule of your main repo
+1. Make some changes in the Submodule
+1. Check the status of the main repo
+1. Commit in the Submodule
+1. Check the status of the main repo
+1. Commit the updated main repo to point to the ne commit in the  submodule
+</section>
+
+<section>
+# Bisect
+</section>
+
+<section>
+# Github
 </section>
 
 <section data-markdown>
