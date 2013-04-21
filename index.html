@@ -139,7 +139,7 @@ And commit
 </section>
 
 <section data-markdown>
-## exercise 1
+## Try it
 1. create a new repository
 1. add some text-files
 1. commit
@@ -232,7 +232,7 @@ See the log of all the branches:
 </section>
 
 <section data-markdown>
-## exercise 2
+## Try it
 1. edit two text files
 1. check the status
 1. add one of them to the index
@@ -306,7 +306,7 @@ This will create a commit to undo everything introduced by &lt;commit-hash&gt;
 </section>
 
 <section data-markdown>
-## exercise 3
+## Try it
 1. edit a file
 1. undo the edit
 1. edit the file and add it to the index
@@ -316,7 +316,7 @@ This will create a commit to undo everything introduced by &lt;commit-hash&gt;
 </section>
 
 <section data-markdown>
-## exercise 4
+## Try it
 1. edit a file and commit
 1. revert the commit with `git revert`
 1. check the git log
@@ -515,7 +515,7 @@ Sometimes you want a merge commit, even when a simple Fast Forward is possible.
 </section>
 
 <section data-markdown>
-## exercise 5
+## Try it
 1. Create a new branch and check it out
 1. Edit a file and commit
 1. Checkout the master branch
@@ -524,7 +524,7 @@ Sometimes you want a merge commit, even when a simple Fast Forward is possible.
 1. Merge both branches
 </section>
 <section data-markdown>
-## exercise 6
+## Try it
 1. Edit files on both branches, introducing conflicts
 1. Merge both branches
 1. Resolve the conflicts
@@ -533,7 +533,17 @@ Sometimes you want a merge commit, even when a simple Fast Forward is possible.
 <section>
 
 <section data-markdown>
-## Browsing an earlier commit
+## Inspecting an earlier commit
+### Show
+
+    git show 2a2ea8d
+    git show HEAD^^
+
+Gives you a **diff** of what exactly that commit changed **+ metadata** for that commit
+</section>
+<section data-markdown>
+## Inspecting an earlier commit
+### Checkout
 You can checkout a commit to see the repository as it was back then
 
     git checkout &lt;commit-hash&gt;
@@ -563,7 +573,7 @@ Useful when you make a mistake during rebasing, merging or resetting.
 Your old commits are not 'lost'. They are simply not used anymore and will be removed by `git gc` after a while.
 </section>
 <section data-markdown>
-## exercise
+## Try it
 1. edit a file
 1. commit
 1. reset to the previous commit
@@ -688,13 +698,13 @@ To rebase the most recent 3 commits:
 </section>
 </section>
 <section data-markdown>
-## exercise 7
+## Try it
 1. edit a file and commit
 1. edit the file again
 1. commit the file with the `--amend` option
 </section>
 <section data-markdown>
-## exercise 8
+## Try it
 1. create and checkout a branch
 1. edit a file and commit
 1. checkout the master branch
@@ -746,6 +756,18 @@ This is done with the `git remote` command
     git remote add github git@github.com:teranex/git-talk.git
 
 This will add my Github repository for this presentation as a remote with the name _github_
+</section>
+<section data-markdown>
+## Tip: pretty url's for remotes
+You can add shortcuts in your git config for often used url's
+
+    git config --global url.git@github.com.insteadOf gh
+    git config --global url.ssh://myuser@mydomain.net/path/to/repos/.insteadOf r
+
+Then you can use short url's to clone
+
+    git clone gh:teranex/dotvim
+    git clone r:myrepo.git
 </section>
 <section data-markdown>
 ## Pulling and pushing
@@ -834,7 +856,7 @@ or, if you want to do it manually:
 </section>
 </section>
 <section data-markdown>
-## exercise 9
+## Try it
 1. Clone a repository
 1. Checkout a remote branch (you are now in a detached head state)
 1. Create a local branch for the remote branch
@@ -881,7 +903,7 @@ I often use the stash when I want to `git pull --rebase`, while I have uncommitt
 </section>
 
 <section data-markdown>
-## exercise 10
+## Try it
 1. make some edits
 1. stash them
 1. unstash them
@@ -1030,8 +1052,7 @@ To update all the modules, you can use something like:
 </section>
 
 <section data-markdown>
-# Exercise
-
+# Try it
 1. Create a new repo with a commit
 1. Add it as a submodule of your main repo
 1. Make some changes in the Submodule
@@ -1042,7 +1063,51 @@ To update all the modules, you can use something like:
 </section>
 
 <section>
+<section data-markdown>
 # Bisect
+Helping you to find which commit introduced the bug
+</section>
+<section data-markdown>
+Sometimes somebody will introduce bugs into your software or brake previously working features. Who knows, maybe even you! While trying to find the source of the problem, it can be useful to know which commit exactly introduced the troubles in paradise. That is exactly what Git bisect is for.
+</section>
+<section data-markdown>
+## Steps for bisecting
+1. Inform Git about one 'good' commit
+1. And about one 'bad' commit
+1. Git will checkout a commit for you
+1. Verify that commit
+1. Tell Git whether that commit has the problem ('bad'), or not ('good')
+1. Finally the 'bad' commit will be found
+</section>
+<section data-markdown>
+## an example
+Let's say you know the feature was already broken in the previous commit and 10 commits ago the feature still worked.
+</section>
+<section data-markdown>
+Start Git Bisect and inform Git about this:
+
+    git bisect start
+    git bisect bad HEAD^
+    git bisect good HEAD~10
+</section>
+<section data-markdown>
+Git will checkout the commit in the middle, so you can test:
+
+    Bisecting: 5 revisions left to test after this (roughly 3 steps)
+</section>
+<section data-markdown>
+After testing you inform Git about the result
+
+    git bisect good # when the feature worked
+    git bisect bad  # when the feature is b0rken
+</section>
+<section data-markdown>
+After you have found the bad commit, reset your repository:
+
+    git bisect reset
+
+If you write a script which can verify each commit, you can let Git run it for every commit!
+</section>
 </section>
 
 <section>
