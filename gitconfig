@@ -1,0 +1,74 @@
+; vim: ft=gitconfig
+[diff]
+    ; external = ~/scripts/git/vimdiff_wrapper
+
+[pager]
+    diff =
+
+[color]
+    diff = auto
+    status = auto
+    branch = auto
+    grep = auto
+    interactive = always
+    pager = true
+    showbranch = auto
+    status = auto
+    ui = always
+
+[color "interactive"]
+    error = red bold
+
+[color "status"]
+    added = green
+    changed = yellow
+
+[user]
+    ;email = jeroen@andoria
+    signingkey = 0x610DB834
+
+[alias]
+    stat = status
+    st = status
+    s = status --short --branch
+    co = commit -v
+    ca = commit -a -v
+    ch = checkout
+    l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+    sl = !git l HEAD~10..
+    update-submodules = !git submodule foreach git pull origin master
+    ru = !branch_name="$(git symbolic-ref HEAD 2>/dev/null)" && git rebase origin/"${branch_name##refs/heads/}" && unset branch_name
+    vimdiff = !vim -p $(git diff --name-only --ignore-submodules=all) -c \"map q :qa!<Enter> | tabdo Gdiff\"
+	vimmdiff = !git vimdiff
+	ds = dropbox sync
+	sync-svn = !git svn rebase && git svn dcommit
+
+[core]
+    excludesfile = /home/jeroen/scripts/git/gitignore
+
+[giggle]
+	main-window-maximized = true
+	main-window-geometry = 0x0+0+0
+	main-window-view = HistoryView
+	history-view-vpane-position = 690
+	file-view-vpane-position = 603
+	file-view-hpane-position = 383
+
+[tig]
+    show-rev-graph = yes
+    show-line-numbers = yes
+    line-number-interval = 1
+
+[init]
+	templatedir = /home/jeroen/scripts/git/templates
+
+[rerere]
+    enabled = true
+[dropbox]
+	folder = /media/cryptdata/Dropbox/repos
+[url "ssh://jeroenbudts@gluefish.net/home/jeroenbudts/repos/"]
+	insteadOf = g:
+[push]
+	default = simple
+[credential]
+	helper = cache --timeout=14400
