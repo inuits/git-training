@@ -1,3 +1,11 @@
+# Submodule
+This repository uses a submodule to pull in reveal.js, so after cloning you still need to pull in the submodule. If you don't do this the presentation will not have any layout.
+
+```bash
+git submodule update --init
+```
+
+
 # Reveal.js template
 
 This is a very simple repository which can be used to start a new reveal.js
