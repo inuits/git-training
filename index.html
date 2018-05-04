@@ -287,7 +287,12 @@ git clean -f</code></pre>
 <li>edit some more files and revert everything with <code>git reset --hard</code></li>
 </ol>
 </section></section>
-<section><section id="how-git-stores-data" class="titleslide slide level1"><h1>How Git stores data</h1></section><section id="types-of-objects" class="slide level2">
+<section><section id="how-git-stores-data" class="titleslide slide level1"><h1>How Git stores data</h1></section><section class="slide level2">
+
+<p>Knowing this gives you a better understanding of Git</p>
+<p>A Git repository is a<br />
+<strong>collection of objects</strong></p>
+</section><section id="types-of-objects" class="slide level2">
 <h2>Types of objects</h2>
 <ul>
 <li>blobs</li>
@@ -304,6 +309,8 @@ git clean -f</code></pre>
 <li>a hash is calculated as the blob name</li>
 <li>the hash will always be the same for the same contents</li>
 </ul>
+</section><section class="slide level2">
+
 <p>some examples:</p>
 <pre><code>$ git hash-object hello.txt
 ce6c1fd146f65c899e6b10e46c89097c644e3229
@@ -319,8 +326,8 @@ a8784b043f12b4b0c9114c55ebf33f5c9b44ce8f</code></pre>
 <li>Contains the meta data about the files</li>
 <li>Itself also identified by a hash</li>
 </ul>
-</section><section id="trees-1" class="slide level2">
-<h2>Trees</h2>
+</section><section class="slide level2">
+
 <figure>
 <img src="images/git-03_2.png" alt="git-03" /><figcaption>git-03</figcaption>
 </figure>
@@ -329,42 +336,45 @@ a8784b043f12b4b0c9114c55ebf33f5c9b44ce8f</code></pre>
 <p>If you think about Git, think about commits!</p>
 <ul>
 <li>Contains a reference to one tree object</li>
-<li>Contains references to one or more other commits</li>
+<li>Contains references to one or more other commits
+<ul>
 <li>one exception: the very first commit in the repo</li>
+</ul></li>
 <li>A commit usually points to it's parent commit</li>
 <li>In case of a merge, it can point to two or more commits (one commit for each branch which you merged together)</li>
 </ul>
-</section><section id="commits-1" class="slide level2">
-<h2>Commits</h2>
+</section><section class="slide level2">
+
 <figure>
 <img src="images/git-04.png" alt="git-04" /><figcaption>git-04</figcaption>
 </figure>
-<p>Did I mention that you should think in terms of commits, when working with Git?</p>
-<p>If you understand commits, you basically understand Git.</p>
+</section><section class="slide level2">
+
+<p>If you understand commits,<br />
+you basically understand Git.</p>
 </section><section id="references-refs" class="slide level2">
 <h2>references ('refs')</h2>
 <p>Because a commit hash is very difficult to remember and not really useful to work with, Git uses references to point to specific commits.</p>
-<h3 id="head">HEAD</h3>
+</section><section id="head" class="slide level2">
+<h2>HEAD</h2>
 <p>One such reference is <strong>HEAD</strong></p>
-<ul>
-<li>It points to the commit which is currently checked out into your working directory</li>
-</ul>
-<h3 id="master">master</h3>
+<p>It points to the commit which is currently checked out into your working directory</p>
+</section><section id="master" class="slide level2">
+<h2>master</h2>
 <p>Another important reference is <strong>master</strong></p>
 <ul>
 <li>master is the 'default' branch in Git</li>
 <li>when working on the master branch, the master reference and the HEAD reference point to the same commit</li>
 </ul>
-<h3 id="special">special</h3>
+</section><section id="special" class="slide level2">
+<h2>special</h2>
 <ul>
-<li><strong>HEAD^ &amp; HEAD^^</strong>: The commit before HEAD, two commits before HEAD</li>
-<li><strong>master~7</strong>: 7 commits before master reference</li>
+<li><strong><code>HEAD^</code> &amp; <code>HEAD^^</code></strong>: The commit before HEAD, two commits before HEAD</li>
+<li><strong><code>master~7</code></strong>: 7 commits before master reference</li>
 </ul>
-<section>
-<section data-markdown>
 </section></section>
-<section><section id="branches" class="titleslide slide level1"><h1>Branches</h1></section><section id="branches-1" class="slide level2">
-<h2>Branches</h2>
+<section><section id="branches" class="titleslide slide level1"><h1>Branches</h1></section><section class="slide level2">
+
 <p>references to other commits</p>
 <ul>
 <li>very easy to create</li>
@@ -372,8 +382,6 @@ a8784b043f12b4b0c9114c55ebf33f5c9b44ce8f</code></pre>
 <li>this name is also the reference to the most recent commit for that branch</li>
 <li>a commit can be shared by branches</li>
 </ul>
-</section>
-<section data-markdown>
 </section><section id="creating-a-branch" class="slide level2">
 <h2>Creating a branch</h2>
 <p>First create the branch</p>
@@ -382,14 +390,10 @@ a8784b043f12b4b0c9114c55ebf33f5c9b44ce8f</code></pre>
 <pre><code>git checkout mywork</code></pre>
 <p>Or combine the two steps</p>
 <pre><code>git checkout -b mywork</code></pre>
-</section>
-<section data-markdown>
 </section><section id="deleting-a-branch" class="slide level2">
 <h2>deleting a branch</h2>
 <p>Deleting a local branch is also possible</p>
 <pre><code>git branch -d mywork</code></pre>
-</section>
-<section data-markdown>
 </section><section id="branching" class="slide level2">
 <h2>branching</h2>
 <ul>
@@ -397,45 +401,41 @@ a8784b043f12b4b0c9114c55ebf33f5c9b44ce8f</code></pre>
 <li>At commit C2 we decide to split off a new branch named 'mywork'.</li>
 <li>Both branches originate from commit C2; commit C3 and C5 have the same parent</li>
 </ul>
-</section>
-<section data-markdown>
-<img src="images/git-05.png" alt="git-05" />
-</section>
-<section data-markdown>
+</section><section class="slide level2">
+
+<figure>
+<img src="images/git-05.png" alt="git-05" /><figcaption>git-05</figcaption>
+</figure>
 </section><section id="merging" class="slide level2">
 <h2>merging</h2>
 <p>When you have been working on a (feature) branch for a while you will probably want to merge those branches back together.</p>
-<pre><code># to merge the origin branch back into your mywork branch (to bring it up to date)
-# checkout the target branch
-git checkout mywork
-# merge the branch into the current branch
-git merge origin</code></pre>
-</section>
-<section data-markdown>
+<div class="sourceCode"><pre class="sourceCode zsh"><code class="sourceCode zsh">    <span class="co"># to merge the origin branch back into your mywork</span>
+    <span class="co"># branch (to bring it up to date)</span>
+    <span class="co"># checkout the target branch</span>
+    git checkout mywork
+    <span class="co"># merge the branch into the current branch</span>
+    git merge origin</code></pre></div>
+</section><section class="slide level2">
+
 <p>Now your repository looks like this: (Notice that commit C7 has two parents)</p>
-<img src="images/git-06.png" alt="git-06" />
-</section>
-<section data-markdown>
+<figure>
+<img src="images/git-06.png" alt="git-06" /><figcaption>git-06</figcaption>
+</figure>
 </section><section id="merging-1" class="slide level2">
 <h2>Merging</h2>
 <p>When merging two or more branches there are two possibilities:</p>
 <ul>
 <li>Merge commit</li>
-<li>Fast Forward<br />
-</li>
+<li>Fast Forward</li>
 </ul>
-</section>
-<section data-markdown>
 </section><section id="merge-commit" class="slide level2">
 <h2>Merge commit</h2>
 <ul>
 <li>When both branches have new commits a merge commit is created.</li>
 <li><p>Git automatically proposes a commit message:</p>
 <p><code>Merge branch 'mywork' into master</code></p></li>
-<li>The commit has two or more parents</li>
+<li><p>The commit has two or more parents</p></li>
 </ul>
-</section>
-<section data-markdown>
 </section><section id="fast-forward" class="slide level2">
 <h2>Fast Forward</h2>
 <ul>
@@ -446,23 +446,18 @@ git merge origin</code></pre>
 <li>This is an ideal situation and can never go wrong</li>
 <li>Obviously you are not always this lucky (→ rebasing)</li>
 </ul>
-</section>
-<section data-markdown>
-</section><section id="fast-forward-1" class="slide level2">
-<h2>Fast Forward</h2>
+</section><section class="slide level2">
+
 <p><img src="images/git-07-before.png" alt="git-07-before" /><br />
 Merge the 'mywork' branch into origin</p>
-<img src="images/git-07-after.png" alt="git-07-after" /><br />
-The origin branch is simply fast-forwarded
-</section>
-<section data-markdown>
+</section><section class="slide level2">
+
+<p><img src="images/git-07-after.png" alt="git-07-after" /><br />
+The origin branch is simply fast-forwarded</p>
 </section><section id="explicitly-create-merge-commit" class="slide level2">
 <h2>Explicitly create merge commit</h2>
 <p>Sometimes you want a merge commit, even when a simple Fast Forward is possible.</p>
 <pre><code>git merge --no-ff</code></pre>
-</section>
-</section>
-<section data-markdown>
 </section><section id="try-it-4" class="slide level2">
 <h2>Try it</h2>
 <ol type="1">
@@ -473,8 +468,6 @@ The origin branch is simply fast-forwarded
 <li>Edit files on both branches</li>
 <li>Merge both branches</li>
 </ol>
-</section>
-<section data-markdown>
 </section><section id="try-it-5" class="slide level2">
 <h2>Try it</h2>
 <ol type="1">
@@ -483,41 +476,31 @@ The origin branch is simply fast-forwarded
 <li>Resolve the conflicts</li>
 <li>Commit</li>
 </ol>
-</section>
-<section>
-<section data-markdown>
+</section></section>
+<section><section id="history" class="titleslide slide level1"><h1>History</h1></section><section id="git-log" class="slide level2">
+<h2>Git log</h2>
 </section><section id="inspecting-an-earlier-commit" class="slide level2">
 <h2>Inspecting an earlier commit</h2>
-<h3 id="show">Show</h3>
 <pre><code>git show 2a2ea8d
 git show HEAD^^</code></pre>
-Gives you a <strong>diff</strong> of what exactly that commit changed <strong>+ metadata</strong> for that commit
-</section>
-<section data-markdown>
-</section><section id="inspecting-an-earlier-commit-1" class="slide level2">
-<h2>Inspecting an earlier commit</h2>
-<h3 id="checkout">Checkout</h3>
+<p>Gives you a <strong>diff</strong> of what exactly that commit changed <strong>+ metadata</strong> for that commit</p>
+</section><section id="checkout" class="slide level2">
+<h2>Checkout</h2>
 <p>You can checkout a commit to see the repository as it was back then</p>
-<pre><code>git checkout &amp;lt;commit-hash&amp;gt;</code></pre>
-<strong>Note</strong>: Git will tell you that you are in a <em>detached head</em> state, because your HEAD reference doesn't point to any branch.
-</section>
-<section data-markdown>
+<pre><code>git checkout &lt;commit-hash&gt;</code></pre>
+<p><strong>Note</strong>: Git will tell you that you are in a <em>detached head</em> state, because your HEAD reference doesn't point to any branch.</p>
 </section><section id="resetting-to-an-earlier-commit" class="slide level2">
 <h2>Resetting to an earlier commit</h2>
 <p>You can reset your branch to an earlier commit, to throw away the newer commit(s).</p>
 <pre><code>git reset HEAD^^</code></pre>
 <p>This will change the reference for the branch to that commit</p>
-<strong>Note</strong>: only do this if you have not yet pushed these newer commits
-</section>
-<section data-markdown>
+<p><strong>Note</strong>: only do this if you have not yet pushed these newer commits</p>
 </section><section id="reflog" class="slide level2">
 <h2>Reflog</h2>
 <p>The reflog is a log of everything which happened in your repository</p>
 <pre><code>git reflog</code></pre>
 <p>Useful when you make a mistake during rebasing, merging or resetting.</p>
-Your old commits are not 'lost'. They are simply not used anymore and will be removed by <code>git gc</code> after a while.
-</section>
-<section data-markdown>
+<p>Your old commits are not 'lost'. They are simply not used anymore and will be removed by <code>git gc</code> after a while.</p>
 </section><section id="try-it-6" class="slide level2">
 <h2>Try it</h2>
 <ol type="1">
@@ -531,10 +514,15 @@ Your old commits are not 'lost'. They are simply not used anymore and will be re
 <li>commit the file</li>
 <li>check the reflog</li>
 </ol>
-</section>
-<section data-markdown>
 </section></section>
-<section><section id="rebasing" class="titleslide slide level1"><h1>Rebasing</h1></section><section id="what-is-rebasing" class="slide level2">
+<section><section id="rebasing" class="titleslide slide level1"><h1>Rebasing</h1></section><section class="slide level2">
+
+<p>Instead of merging (with merge commits) you can also rebase (so you can then fast forward)</p>
+</section><section class="slide level2">
+
+<p>Some people will tell you that this is very harmful, it can break your repository and destroy the universe.<br />
+This is <strong>NOT TRUE</strong>. (At least if you know what you are doing)</p>
+</section><section id="what-is-rebasing" class="slide level2">
 <h2>What is 'rebasing'?</h2>
 <p>By rebasing your commits you can actually rewrite your history:</p>
 <ul>
@@ -547,25 +535,23 @@ Your old commits are not 'lost'. They are simply not used anymore and will be re
 <li>...</li>
 <li>And break your repository if you want :)</li>
 </ul>
-</section>
-<section data-markdown>
 </section><section id="how-not-to-destroy-your-repository" class="slide level2">
 <h2>How not to destroy your repository?</h2>
-</section>
-<section>
-<span style="font-size: 150%; ">Do <strong>not</strong> rebase commits which have already been pushed to other people</span>
-</section>
-<section>
-<span style="font-size: 150%; ">Do <strong>not</strong> rebase commits which have already been pushed to other people</span>
-</section>
-<section>
-<span style="font-size: 150%; ">Do <strong>not</strong> rebase commits which have already been pushed to other people</span>
-</section>
-<section data-markdown>
+</section><section class="slide level2">
+
+<p><span style="font-size: 150%; ">Do <strong>not</strong> rebase commits which have already been pushed to other people</span></p>
+</section><section class="slide level2">
+
+<p><span style="font-size: 150%; ">Do <strong>not</strong> rebase commits which have already been pushed to other people</span></p>
+</section><section class="slide level2">
+
+<p><span style="font-size: 150%; ">Do <strong>not</strong> rebase commits which have already been pushed to other people</span></p>
+</section><section class="slide level2">
+
 <p>Each commit which is rebased will get a new, different, hash. People (and Git) which pull this new hash will get confused.</p>
-If you do rebase a commit which was already pushed, Git will refuse the new commit, unless you use the <code>--force</code> option.
-</section>
-<section data-markdown>
+</section><section class="slide level2">
+
+<p>If you do rebase a commit which was already pushed, Git will refuse the new commit, unless you use the <code>--force</code> option.</p>
 </section><section id="amending-changes" class="slide level2">
 <h2>Amending changes</h2>
 <ul>
@@ -575,57 +561,66 @@ If you do rebase a commit which was already pushed, Git will refuse the new comm
 </ul>
 <p>After modifying your index again:</p>
 <pre><code>git commit --amend</code></pre>
-</section>
-<section data-markdown>
 </section><section id="rebasing-on-top-of-another-branch" class="slide level2">
 <h2>Rebasing on top of another branch</h2>
 <p>This is an alternative approach to merging, with a merge commit.</p>
+</section><section class="slide level2">
+
 <p>Let's reuse the example:</p>
 <figure>
 <img src="images/git-05.png" alt="git-05" /><figcaption>git-05</figcaption>
 </figure>
+</section><section class="slide level2">
+
 <p>Now you want to merge 'mywork' into 'origin' without creating a merge commit</p>
-</section>
-<section data-markdown>
+</section><section class="slide level2">
+
 <p>What we did before:</p>
-<pre><code>git checkout origin
-git merge mywork</code></pre>
+<div class="sourceCode"><pre class="sourceCode zsh"><code class="sourceCode zsh">    git checkout origin
+    git merge mywork</code></pre></div>
+</section><section class="slide level2">
+
 <p>What we will do now:</p>
-<pre><code># on the mywork branch
-git rebase origin
-# fix any merge conflicts
-git checkout origin
-git merge mywork</code></pre>
-</section>
-<section data-markdown>
+<div class="sourceCode"><pre class="sourceCode zsh"><code class="sourceCode zsh">    <span class="co"># on the mywork branch</span>
+    git rebase origin
+    <span class="co"># fix any merge conflicts</span>
+    git checkout origin
+    git merge mywork</code></pre></div>
+</section><section class="slide level2">
+
 <pre><code># on the mywork branch
 git rebase origin</code></pre>
-<img src="images/git-08.png" alt="git-08" />
-</section>
-<section data-markdown>
-<img src="images/git-09.png" alt="git-09" />
-</section>
-<section data-markdown>
-<img src="images/git-10.png" alt="git-10" />
-</section>
-<section data-markdown>
+<figure>
+<img src="images/git-08.png" alt="git-08" /><figcaption>git-08</figcaption>
+</figure>
+</section><section class="slide level2">
+
+<figure>
+<img src="images/git-09.png" alt="git-09" /><figcaption>git-09</figcaption>
+</figure>
+</section><section class="slide level2">
+
+<figure>
+<img src="images/git-10.png" alt="git-10" /><figcaption>git-10</figcaption>
+</figure>
 </section><section id="interactive-rebasing" class="slide level2">
 <h2>Interactive rebasing</h2>
 <p>With interactive rebasing you can really rewrite history the way you want it to be. ...And break your repository.</p>
 <p>Rebase the commits since the specified commit-hash</p>
-<pre><code>git rebase --interactive &amp;lt;commit-hash&amp;gt;</code></pre>
-</section>
-<section data-markdown>
+<div class="sourceCode"><pre class="sourceCode zsh"><code class="sourceCode zsh">    git rebase --interactive <span class="kw">&lt;</span>commit-hash<span class="kw">&gt;</span></code></pre></div>
+</section><section class="slide level2">
+
 <p>Suppose we have the following commits</p>
-<img src="images/git-11.png" alt="git-11" />
-</section>
-<section data-markdown>
+<figure>
+<img src="images/git-11.png" alt="git-11" /><figcaption>git-11</figcaption>
+</figure>
+</section><section class="slide level2">
+
 <p>To rebase the most recent 3 commits:</p>
-<pre><code>git rebase --interactive 4efd195</code></pre>
-<img src="images/git-12.png" alt="git-12" />
-</section>
-</section>
-<section data-markdown>
+<div class="sourceCode"><pre class="sourceCode zsh"><code class="sourceCode zsh">    git rebase --interactive 4efd195</code></pre></div>
+<figure>
+<img src="images/git-12.png" alt="git-12" /><figcaption>git-12</figcaption>
+</figure>
 </section><section id="try-it-7" class="slide level2">
 <h2>Try it</h2>
 <ol type="1">
@@ -633,8 +628,6 @@ git rebase origin</code></pre>
 <li>edit the file again</li>
 <li>commit the file with the <code>--amend</code> option</li>
 </ol>
-</section>
-<section data-markdown>
 </section><section id="try-it-8" class="slide level2">
 <h2>Try it</h2>
 <ol type="1">
@@ -644,6 +637,10 @@ git rebase origin</code></pre>
 <li>edit the same file and commit</li>
 <li>do a merge</li>
 <li>check the log</li>
+</ol>
+</section><section class="slide level2">
+
+<ol start="7" type="1">
 <li>undo the merge (reset &amp; checkout)</li>
 <li>checkout the branch</li>
 <li>rebase the branch on top of master</li>
@@ -651,9 +648,6 @@ git rebase origin</code></pre>
 <li>check the log</li>
 <li>Bonus: delete the merged branch</li>
 </ol>
-</section>
-<section>
-<section data-markdown>
 </section></section>
 <section><section id="sharing-code" class="titleslide slide level1"><h1>Sharing code</h1></section><section id="remotes" class="slide level2">
 <h2>Remotes</h2>
@@ -663,16 +657,14 @@ git rebase origin</code></pre>
 <li>remotes have a name</li>
 <li>you can add multiple remotes to a repository</li>
 </ul>
-</section>
-<section data-markdown>
+</section><section class="slide level2">
+
 <p>Easiest method to set this up is by cloning an existing repository instead of initializing your repo.</p>
-<pre><code>git clone http://git.drupal.org/project/drupal.git</code></pre>
+<div class="sourceCode"><pre class="sourceCode zsh"><code class="sourceCode zsh">    git <span class="kw">clone</span> http://git.drupal.org/project/drupal.git</code></pre></div>
 <figure>
 <img src="images/git-14.png" alt="git-14" /><figcaption>git-14</figcaption>
 </figure>
-This will set up everything for you
-</section>
-<section data-markdown>
+<p>This will set up everything for you</p>
 </section><section id="manually-adding-remotes" class="slide level2">
 <h2>Manually adding remotes</h2>
 <p>Sometimes you will want to add a remote</p>
@@ -680,25 +672,20 @@ This will set up everything for you
 <li>Because you had already created the repository</li>
 <li>Or maybe because you want to add one or more additional remotes</li>
 </ul>
-</section>
-<section data-markdown>
 </section><section id="adding-a-remote" class="slide level2">
 <h2>Adding a remote</h2>
 <p>This is done with the <code>git remote</code> command</p>
 <pre><code>git remote add github git@github.com:teranex/git-talk.git</code></pre>
-This will add my Github repository for this presentation as a remote with the name <em>github</em>
-</section>
-<section data-markdown>
+<p>This will add my Github repository for this presentation as a remote with the name <em>github</em></p>
 </section><section id="tip-pretty-urls-for-remotes" class="slide level2">
 <h2>Tip: pretty url's for remotes</h2>
 <p>You can add shortcuts in your git config for often used url's</p>
 <pre><code>git config --global url.git@github.com.insteadOf gh
-git config --global url.ssh://myuser@mydomain.net/path/to/repos/.insteadOf r</code></pre>
+git config --global
+    url.ssh://myuser@mydomain.net/repos/.insteadOf r</code></pre>
 <p>Then you can use short url's to clone</p>
 <pre><code>git clone gh:teranex/dotvim
 git clone r:myrepo.git</code></pre>
-</section>
-<section data-markdown>
 </section><section id="pulling-and-pushing" class="slide level2">
 <h2>Pulling and pushing</h2>
 <p>When you have cloned the repository:</p>
@@ -706,66 +693,62 @@ git clone r:myrepo.git</code></pre>
 <p>This will pull in the changes from the current branch on the origin</p>
 <pre><code>git push</code></pre>
 <p>Will push your changes to the origin</p>
-<strong>However</strong>: This will only work for '<em>tracking</em>' branches.
-</section>
-<section data-markdown>
+<p><strong>However</strong>: This will only work for '<em>tracking</em>' branches.</p>
 </section><section id="remote-branches" class="slide level2">
 <h2>Remote Branches</h2>
 <p>It is important to think about remote branches as just <em>branches</em></p>
-By default, Git does not know, nor care, about relationships between branches!
-</section>
-<section data-markdown>
+<p>By default, Git does not know, nor care, about relationships between branches!</p>
+</section><section class="slide level2">
+
 <ul>
 <li>local branch: <strong>master</strong></li>
 <li>remote ('github') branch: <strong>github/master</strong></li>
 <li><p><strong>Git just sees two branches</strong></p>
 <p><code>git pull github master</code><br />
 <code>git push github master</code></p></li>
-<li>By default, no local branches are created for remote branches</li>
+<li><p>By default, no local branches are created for remote branches</p></li>
 </ul>
-</section>
-<section data-markdown>
 </section><section id="remote-branches-1" class="slide level2">
 <h2>Remote Branches</h2>
-<p>You can get a good overview of all your local and remote branches and how they are tracking with: git branch -avv</p>
-<img src="images/git-19.png" alt="img-19" />
-</section>
-<section data-markdown>
+<p>You can get a good overview of all your local and remote branches and how they are tracking with:</p>
+<div class="sourceCode"><pre class="sourceCode zsh"><code class="sourceCode zsh">    git branch -avv</code></pre></div>
+<figure>
+<img src="images/git-19.png" alt="img-19" /><figcaption>img-19</figcaption>
+</figure>
 </section><section id="tracking-branches" class="slide level2">
 <h2>Tracking branches</h2>
 <p>To create a local branch based on a remote branch:</p>
 <pre><code>git checkout --track -b mywork github/mywork</code></pre>
 <p>To link an existing local branch to a remote branch:</p>
 <pre><code>git branch --setup-stream github/mywork</code></pre>
+</section><section class="slide level2">
+
 <p>You can verify this in the git config file (.git/config) in your repository:</p>
-<img src="images/git-15.png" alt="git-15" />
-</section>
-<section data-markdown>
+<figure>
+<img src="images/git-15.png" alt="git-15" /><figcaption>git-15</figcaption>
+</figure>
 </section><section id="merging-while-pulling" class="slide level2">
 <h2>Merging while pulling</h2>
 <p>To better understand pulling, let's see what actually happens. Instead of using <code>git pull</code>, you also do (while on the master branch):</p>
-<pre><code># pull in the new objects
-git fetch github
+<div class="sourceCode"><pre class="sourceCode zsh"><code class="sourceCode zsh">    <span class="co"># pull in the new objects</span>
+    git fetch github
 
-# merge the remote branch with the local branch
-git merge github/master</code></pre>
-This works exactly the same as merging two local branches!
-</section>
-<section data-markdown>
+    <span class="co"># merge the remote branch with the local branch</span>
+    git merge github/master</code></pre></div>
+<p>This works exactly the same as merging two local branches!</p>
 </section><section id="avoiding-useless-merge-commits" class="slide level2">
 <h2>Avoiding useless merge commits</h2>
 <p>Merging a remote branch in your local branch can create a useless merge commit:</p>
 <figure>
 <img src="images/git-16.png" alt="git-16" /><figcaption>git-16</figcaption>
 </figure>
+</section><section class="slide level2">
+
 <p>You can avoid this by rebasing instead of merging:</p>
-<pre><code>git pull --rebase</code></pre>
+<div class="sourceCode"><pre class="sourceCode zsh"><code class="sourceCode zsh">    git pull --rebase</code></pre></div>
 <p>or, if you want to do it manually:</p>
-<pre><code>git fetch github
-git rebase github/master</code></pre>
-</section>
-</section>
-<section data-markdown>
+<div class="sourceCode"><pre class="sourceCode zsh"><code class="sourceCode zsh">    git fetch github
+    git rebase github/master</code></pre></div>
 </section><section id="try-it-9" class="slide level2">
 <h2>Try it</h2>
 <ol type="1">
@@ -773,33 +756,33 @@ git rebase github/master</code></pre>
 <li>Checkout a remote branch (you are now in a detached head state)</li>
 <li>Create a local branch for the remote branch</li>
 </ol>
-</section>
-<section>
-<section data-markdown>
 </section></section>
-<section><section id="stash" class="titleslide slide level1"><h1>Stash</h1></section><section id="stashing" class="slide level2">
+<section><section id="stash" class="titleslide slide level1"><h1>Stash</h1></section><section class="slide level2">
+
+<p>Sometimes you want to set aside your changes</p>
+<ul>
+<li>because you want to rebase (which is not possible in a dirty repository)</li>
+<li>to try alternative approaches</li>
+<li>...</li>
+</ul>
+</section><section id="stashing" class="slide level2">
 <h2>Stashing</h2>
 <p>to stash everything</p>
 <pre><code>git stash</code></pre>
 <p>Or you can give a description</p>
 <pre><code>git stash save &quot;something fancy I was working on&quot;</code></pre>
-</section>
-<section data-markdown>
 </section><section id="stashing-1" class="slide level2">
 <h2>Stashing</h2>
 <p>to see the stashes</p>
 <pre><code>git stash list</code></pre>
 <p>to get changes back from the stash</p>
 <pre><code>git stash pop</code></pre>
-</section>
-<section data-markdown>
+</section><section class="slide level2">
+
 <p>I often use the stash when I want to <code>git pull --rebase</code>, while I have uncommitted changes (git will refuse to do it in that case):</p>
 <pre><code>git stash
 git pull --rebase
 git stash pop</code></pre>
-</section>
-</section>
-<section data-markdown>
 </section><section id="try-it-10" class="slide level2">
 <h2>Try it</h2>
 <ol type="1">
@@ -807,39 +790,6 @@ git stash pop</code></pre>
 <li>stash them</li>
 <li>unstash them</li>
 </ol>
-</section>
-<section>
-<section data-markdown>
-</section></section>
-<section><section id="tools" class="titleslide slide level1"><h1>Tools</h1></section><section id="gui-tools" class="slide level2">
-<h2>GUI tools</h2>
-<ul>
-<li>TortoiseGit</li>
-<li>Github for Windows</li>
-<li>Giggle</li>
-<li>Tig</li>
-<li>Fugitive</li>
-<li>IDE integration</li>
-</ul>
-</section>
-<section data-markdown>
-</section><section id="giggle-gitx-better-looking-for-gnome-mac" class="slide level2">
-<h2>Giggle &amp; GitX: better looking, for Gnome &amp; Mac</h2>
-<img src="images/git-17.png" alt="git-17" />
-</section>
-<section data-markdown>
-</section><section id="fugitive-and-gitv-plugins-for-vim" class="slide level2">
-<h2>Fugitive and gitv plugins for Vim</h2>
-<img src="images/tools-2.png" alt="tools-2" />
-</section>
-<section data-markdown>
-</section><section id="bash-prompt-information" class="slide level2">
-<h2>bash prompt information</h2>
-Include <code>$(__git_ps1 '  %s  ')</code> in your $PS1 <img src="images/tools-3.png" alt="tools-3" />
-</section>
-</section>
-<section>
-<section data-markdown>
 </section></section>
 <section><section id="git-and-subversion" class="titleslide slide level1"><h1>Git and Subversion</h1></section><section id="git-svn" class="slide level2">
 <h2>git-svn</h2>
@@ -848,33 +798,37 @@ Include <code>$(__git_ps1 '  %s  ')</code> in your $PS1 <img src="images/tools-3
 <li>migrate an existing subversion repository to a git repository, including all the history.</li>
 <li>use Git locally to do your work, but push to a central Subversion server.</li>
 </ul>
-</section>
-<section data-markdown>
 </section><section id="local-git-subversion-server" class="slide level2">
 <h2>Local Git, Subversion server</h2>
 <p>To locally use Git and push to a central Subversion server:</p>
 <p>First 'clone' the Subversion repository into a local Git repo</p>
 <pre><code>git svn clone -s http://svn.example.com/myproject
 # the -s means the subversion repo has a standard layout (trunk/ etc)</code></pre>
-</section>
-<section data-markdown>
+</section><section class="slide level2">
+
 <p>Now you can work as usual with your Git repository. Except... instead of running <code>git pull</code> to get the changes from other people, you now do:</p>
 <pre><code>git svn rebase</code></pre>
 <p>And you don't do <code>git push</code>, but:</p>
 <pre><code>git svn dcommit</code></pre>
-</section>
-</section>
-<section>
-<section data-markdown>
 </section></section>
-<section><section id="git-flow" class="titleslide slide level1"><h1>Git Flow</h1></section></section>
-<section><section id="submodules" class="titleslide slide level1"><h1>Submodules</h1></section><section id="add-a-submodule" class="slide level2">
+<section><section id="submodules" class="titleslide slide level1"><h1>Submodules</h1></section><section class="slide level2">
+
+<p>In a Git repository you can 'link' other repositories to subdirectories. This can be useful, for example when using external libraries or when building your VIM configuration, to pull in all the plugins.</p>
+</section><section class="slide level2">
+
+<p>Similar to svn:externals, but not quite the same:</p>
+<ul>
+<li>submodules must be registered in the repository</li>
+<li>submodules must be pulled-in separately for each repo.</li>
+<li>submodules are not updated automatically</li>
+<li>submodules are not pushed automatically</li>
+<li>a specific commit is referenced in the parent repo</li>
+</ul>
+</section><section id="add-a-submodule" class="slide level2">
 <h2>Add a submodule</h2>
 <pre><code># from the root of the repository
 git submodule add git://path/to/repo path/in/repo</code></pre>
-This will modify the .gitmodules file, which is part of the parent repository, and record the exact commit which is checked out in the submodule. Now you can commit, push, etc.
-</section>
-<section data-markdown>
+<p>This will modify the .gitmodules file, which is part of the parent repository, and record the exact commit which is checked out in the submodule. Now you can commit, push, etc.</p>
 </section><section id="pulling-in-submodules" class="slide level2">
 <h2>Pulling in submodules</h2>
 <p>When another repository pulls in the change the following steps are required:</p>
@@ -884,19 +838,30 @@ This will modify the .gitmodules file, which is part of the parent repository, a
 <p>This will check-out all the submodules to the correct commit</p>
 <pre><code># or combine both steps
 git submodule update --init</code></pre>
-</section>
-<section data-markdown>
 </section><section id="updating-submodules" class="slide level2">
 <h2>Updating submodules</h2>
 <p>To update you can checkout another commit in the submodule (for example by pulling) and commit the reference to this new commit in the parent repository.</p>
 <p>To update all the modules, you can use something like:</p>
 <pre><code>git submodule foreach git pull origin master</code></pre>
-</section>
-</section>
-<section data-markdown>
+</section><section id="try-it-11" class="slide level2">
+<h2>Try it</h2>
+<ol type="1">
+<li>Create a new repo with a commit</li>
+<li>Add it as a submodule of your main repo</li>
+<li>Make some changes in the Submodule</li>
+<li>Check the status of the main repo</li>
+<li>Commit in the Submodule</li>
+<li>Check the status of the main repo</li>
+<li>Commit the updated main repo to point to the ne commit in the submodule</li>
+</ol>
 </section></section>
-<section><section id="try-it-11" class="titleslide slide level1"><h1>Try it</h1></section></section>
-<section><section id="bisect" class="titleslide slide level1"><h1>Bisect</h1></section><section id="steps-for-bisecting" class="slide level2">
+<section><section id="bisect" class="titleslide slide level1"><h1>Bisect</h1></section><section class="slide level2">
+
+<p>Helping you to find which commit introduced the bug</p>
+</section><section class="slide level2">
+
+<p>Sometimes somebody will introduce bugs into your software or brake previously working features. Who knows, maybe even you! While trying to find the source of the problem, it can be useful to know which commit exactly introduced the troubles in paradise. That is exactly what Git bisect is for.</p>
+</section><section id="steps-for-bisecting" class="slide level2">
 <h2>Steps for bisecting</h2>
 <ol type="1">
 <li>Inform Git about one 'good' commit</li>
@@ -906,37 +871,49 @@ git submodule update --init</code></pre>
 <li>Tell Git whether that commit has the problem ('bad'), or not ('good')</li>
 <li>Finally the 'bad' commit will be found</li>
 </ol>
-</section>
-<section data-markdown>
 </section><section id="an-example" class="slide level2">
 <h2>an example</h2>
-Let's say you know the feature was already broken in the previous commit and 10 commits ago the feature still worked.
-</section>
-<section data-markdown>
+<p>Let's say you know the feature was already broken in the previous commit and 10 commits ago the feature still worked.</p>
+</section><section class="slide level2">
+
 <p>Start Git Bisect and inform Git about this:</p>
 <pre><code>git bisect start
 git bisect bad HEAD^
 git bisect good HEAD~10</code></pre>
-</section>
-<section data-markdown>
+</section><section class="slide level2">
+
 <p>Git will checkout the commit in the middle, so you can test:</p>
 <pre><code>Bisecting: 5 revisions left to test after this (roughly 3 steps)</code></pre>
-</section>
-<section data-markdown>
+</section><section class="slide level2">
+
 <p>After testing you inform Git about the result</p>
 <pre><code>git bisect good # when the feature worked
 git bisect bad  # when the feature is b0rken</code></pre>
-</section>
-<section data-markdown>
+</section><section class="slide level2">
+
 <p>After you have found the bad commit, reset your repository:</p>
 <pre><code>git bisect reset</code></pre>
-If you write a script which can verify each commit, you can let Git run it for every commit!
-</section>
-<section data-markdown>
+<p>If you write a script which can verify each commit, you can let Git run it for every commit!</p>
+</section><section id="try-it-12" class="slide level2">
+<h2>Try it</h2>
+<ol type="1">
+<li>Find the commit which changed <code>A tree is a like a **directory**</code> into <code>A tree is like a **directory**</code></li>
+</ol>
 </section></section>
-<section><section id="try-it-12" class="titleslide slide level1"><h1>Try it</h1></section></section>
-<section><section id="suggested-reading" class="titleslide slide level1"><h1>Suggested reading</h1></section></section>
-<section><section id="the-end" class="titleslide slide level1"><h1>The end</h1></section></section>
+<section><section id="suggested-reading" class="titleslide slide level1"><h1>Suggested reading</h1></section><section class="slide level2">
+
+<ul>
+<li>the git man-pages</li>
+<li>the .git-folder of a repository (just take a look, it's interesting)</li>
+<li>Pro Git: <a href="http://progit.org/" class="uri">http://progit.org/</a></li>
+<li>The Git Community Book: <a href="http://book.git-scm.com/" class="uri">http://book.git-scm.com/</a></li>
+<li>StackOverflow: <a href="http://stackoverflow.com/questions/tagged/git">http://stackoverflow.com</a> has a lot of valuable questions and answers related to Git.</li>
+</ul>
+</section></section>
+<section><section id="question" class="titleslide slide level1"><h1>Question?</h1></section><section class="slide level2">
+
+<p>Thank you for your time</p>
+</section></section>
     </div>
   </div>
 
