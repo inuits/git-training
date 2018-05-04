@@ -1,0 +1,1179 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+
+    <title>Git</title>
+
+    <meta name="description" content="$TITLE$">
+    <meta name="author" content="$AUTHOR$">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <link rel="stylesheet" href="reveal/css/reveal.min.css">
+    <link rel="stylesheet" href="reveal/css/theme/default.css" id="theme">
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="css/monokai.css">
+    <link rel="stylesheet" href="css/custom.css">
+
+    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+    <script>
+      document.write( '<link rel="stylesheet" href="reveal/css/print/' + ( window.location.search.match(
+      /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="reveal">
+
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides">
+        <section>
+        <h1>Git</h1>
+        </section>
+
+        <section data-markdown>
+# Who am I?
+* Jeroen Budts
+* PHP & Drupal Developer
+* At [Inuits](http://inuits.eu) - An Open Source Consultancy Company
+* [http://budts.be](http://budts.be)
+* twitter: @teranex
+* e-mail: jeroen@inuits.eu
+        </section>
+
+        <section data-markdown>
+# Overview
+* Basic Git usage
+* How Git stores it's stuff
+* More advanced Git usage
+(branching, merging, rebasing, ..)
+* Working with remotes
+* Other tools (Subversion integration etc)
+* Git flow
+* Github
+        </section>
+
+        <section>
+        <section data-markdown>
+# What is Git?
+        </section>
+        <section data-markdown>
+"Git is a free & open source, distributed version control system designed to
+handle everything from small to very large projects with speed and efficiency."
+        </section>
+
+        <section data-markdown>
+# Distributed
+* The entire repository is on your computer
+* No connection to the server required to work, view log
+* Very fast
+        </section>
+
+        <section data-markdown>
+# Open source
+* Created in 2005
+* Linux Kernel
+* Linus Torvalds
+        </section>
+        </section>
+
+<section>
+<section data-markdown>
+# Basic Git Usage
+</section>
+<section data-markdown>
+First initialize the git repository:
+
+    git init
+</section>
+<section data-markdown>
+Then add files
+
+    git add -A
+    # or
+    git add .
+    # or
+    git add myfile.txt
+    git add *.rb
+    git add directory/
+</section>
+<section data-markdown>
+And commit the files
+
+    git commit
+
+Git will ask you for a commit message.
+</section>
+<section data-markdown>
+Committing modified files.  
+Stage the files (more on that later):
+
+    git add file.txt
+
+And commit:
+
+    git commit
+</section>
+<section data-markdown>
+Or skip the staging step and immediately commit:
+
+    git commit -a
+</section>
+<section data-markdown>
+Removing a file
+
+    git rm file.txt
+
+And commit
+
+    git commit
+</section>
+</section>
+
+<section data-markdown>
+## Try it
+1. create a new repository
+1. add some text-files
+1. commit
+1. make some changes
+1. commit (with `-a` for now)
+1. remove a file
+1. commit (with `-a`)
+</section>
+
+<section>
+<section data-markdown>
+# The Index
+A.K.A. The Staging Area
+</section>
+<section data-markdown>
+The index contains the changes that will be **added** to your next **commit**. Your
+commit will _not_ contain the changes in your working directory.  
+
+**Only the changes that were added to the index will be in the commit**
+</section>
+<section>
+<img src="images/git-02.png" alt="">
+</section>
+<section data-markdown>
+If you add a file, or a part of a file, to the index, a copy is made of that
+file. When you commit, it is that copy which ends up in the commit.
+
+**Important**: if you make changes to the file after adding it to the index, those changes will 
+not end up in your commit, unless you add the file again to the index!
+
+If you modify files, you need to '_stage_' them again, by running `git add`.  
+
+You can also add only parts of a modified file:
+
+    git add -p myfile.txt
+
+**Tip**: use a tool for this
+</section>
+</section>
+
+<section>
+<section data-markdown>
+# Checking the state of your repository
+</section>
+<section data-markdown>
+Checking the state of the working copy
+
+    git status
+
+![status](images/status.png)
+</section>
+<section data-markdown>
+Seeing what has changed
+
+    `git diff`  
+    # shows the diff of your working copy
+
+    `git diff --cached`
+    # show the diff of your index
+
+**Tip**: use a tool for this
+</section>
+<section data-markdown>
+Checking the log of your current branch
+
+    git log
+
+![log](images/git-13.png)
+</section>
+<section data-markdown>
+`git log` has many options. For example:
+
+    git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+
+results in:
+![git-11](images/git-11.png)
+
+**Tip**: add this in your global gitconfig as an alias:
+
+    [alias]
+        l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative    
+</section>
+<section data-markdown>
+See the log of all the branches:
+
+    git log --all
+
+![log --all](images/log-all.png)
+</section>
+</section>
+
+<section data-markdown>
+## Try it
+1. edit two text files
+1. check the status
+1. add one of them to the index
+1. commit
+1. add the other to the index
+1. edit the file again
+1. check the status
+1. check the diff and diff --cached
+</section>
+
+<section>
+<section data-markdown>
+# Undoing things
+</section>
+<section data-markdown>
+## Undoing changes to a file
+
+    git checkout -- file.txt
+    # the -- are optional, to tell git it's about a file
+    git checkout directory/
+
+But **not**
+
+    git checkout branch-name
+</section>
+<section data-markdown>
+**Note**:
+This gets back the version from the **index**.
+If the file is not in the index, it will get the file from the repository.
+</section>
+<section data-markdown>
+## Resetting from the index
+To reset the file after it was added to the index:
+
+    git reset file.txt
+
+The working copy is now the version from the index and the file is not in the index anymore.
+Then you can use
+
+    git checkout file.txt
+
+To completely reset it to the version in the repository.
+</section>
+<section data-markdown>
+## Removing unversioned files
+
+    git clean -f
+    # to remove untracked files
+
+    git clean -f -d
+    # to remove untracked directories
+</section>
+<section data-markdown>
+## Completely resetting your working copy
+
+    git reset --hard
+
+    # optionally followed by
+    git clean -f
+
+**Use with care!**
+</section>
+<section data-markdown>
+## Reverting a commit
+After a commit was already pushed out to other people.
+
+    git revert <commit-hash>
+
+This will create a commit to undo everything introduced by &lt;commit-hash&gt;
+</section>
+</section>
+
+<section data-markdown>
+## Try it
+1. edit a file
+1. undo the edit
+1. edit the file and add it to the index
+1. edit the same file, get the version back from the index
+1. create a new file
+1. use `git clean` to remove it
+</section>
+
+<section data-markdown>
+## Try it
+1. edit a file and commit
+1. revert the commit with `git revert`
+1. check the git log
+1. edit some more files and revert everything with `git reset --hard`
+</section>
+
+<section>
+<section data-markdown>
+# How Git stores data
+Knowing this gives you a better understanding of Git
+</section>
+<section data-markdown>
+A Git repository is a  
+**collection of objects**
+</section>
+<section data-markdown>
+## Types of objects
+* blobs
+* trees
+* commits
+* tags
+</section>
+<section data-markdown>
+## blobs
+Git stores the **contents of a file** in a 'blob'.
+
+* does not contain any meta data
+* a blob never changes
+* a hash is calculated as the blob name
+* the hash will always be the same for the same contents
+</section>
+<section data-markdown>
+some examples:
+
+    $ git hash-object hello.txt
+    ce6c1fd146f65c899e6b10e46c89097c644e3229
+    
+    $ git hash-object say-hi.rb
+    a8784b043f12b4b0c9114c55ebf33f5c9b44ce8f
+</section>
+<section data-markdown>
+## Trees
+A tree is like a **directory**
+
+* Can contain references to 1 or more blobs
+* Can contain references to 0, 1 or more other trees
+* Contains the meta data about the files
+* Itself also identified by a hash
+</section>
+<section data-markdown>
+## Trees
+![git-03](images/git-03_2.png)
+</section>
+<section data-markdown>
+## Commits
+If you think about Git, think about commits!
+
+* Contains a reference to one tree object
+* Contains references to one or more other commits
+   * one exception: the very first commit in the repo
+* A commit usually points to it's parent commit
+* In case of a merge, it can point to two or more commits (one commit for each branch which you merged together)
+</section>
+<section data-markdown>
+## Commits
+
+![git-04](images/git-04.png)
+
+Did I mention that you should think in terms of commits, when working with Git?  
+
+If you understand commits, you basically understand Git.
+</section>
+<section data-markdown>
+## references ('refs')
+Because a commit hash is very difficult to remember and not really useful to work with, Git uses references to point to specific commits.
+</section>
+<section data-markdown>
+### HEAD
+One such reference is **HEAD**
+
+* It points to the commit which is currently checked out into your working directory
+</section>
+<section data-markdown>
+### master
+Another important reference is **master**
+
+* master is the 'default' branch in Git
+* when working on the master branch, the master reference and the HEAD reference point to the same commit
+</section>
+<section data-markdown>
+### special
+
+* **HEAD^ &amp; HEAD^^**: The commit before HEAD, two commits before HEAD
+* **master~7**: 7 commits before master reference
+</section>
+</section>
+
+<section>
+<section data-markdown>
+# Branches
+</section>
+<section data-markdown>
+## Branches
+references to other commits
+
+* very easy to create
+* a branch has a name
+* this name is also the reference to the most recent commit for that branch
+* a commit can be shared by branches
+</section>
+<section data-markdown>
+## Creating a branch
+First create the branch
+
+    git branch mywork
+
+Then start working on that branch:
+
+    git checkout mywork
+
+Or combine the two steps
+
+    git checkout -b mywork
+</section>
+<section data-markdown>
+## deleting a branch
+Deleting a local branch is also possible
+
+    git branch -d mywork
+</section>
+<section data-markdown>
+## branching
+* We are working on a branch named 'origin'
+* At commit C2 we decide to split off a new branch named 'mywork'.
+* Both branches originate from commit C2; commit C3 and C5 have the same parent
+</section>
+<section data-markdown>
+![git-05](images/git-05.png)
+</section>
+<section data-markdown>
+## merging
+When you have been working on a (feature) branch for a while you will probably want to merge those branches back together.
+
+    # to merge the origin branch back into your mywork branch (to bring it up to date)
+    # checkout the target branch
+    git checkout mywork
+    # merge the branch into the current branch
+    git merge origin
+</section>
+<section data-markdown>
+Now your repository looks like this: (Notice that commit C7 has two parents)
+
+![git-06](images/git-06.png)
+</section>
+<section data-markdown>
+## Merging
+
+When merging two or more branches there are two possibilities:
+
+* Merge commit
+* Fast Forward  
+</section>
+<section data-markdown>
+## Merge commit
+* When both branches have new commits a merge commit is created.
+* Git automatically proposes a commit message:  
+
+    `Merge branch 'mywork' into master`
+
+* The commit has two or more parents
+</section>
+<section data-markdown>
+## Fast Forward
+* When the target branch does not have new commits
+* No merge commit is created
+* In fact nothing much happens
+* Except: The reference for the target branch is simply changed to point the same commit as the source branch
+* This is an ideal situation and can never go wrong
+* Obviously you are not always this lucky (→ rebasing)
+</section>
+<section data-markdown>
+## Fast Forward
+
+![git-07-before](images/git-07-before.png)  
+Merge the 'mywork' branch into origin
+
+![git-07-after](images/git-07-after.png)  
+The origin branch is simply fast-forwarded
+</section>
+<section data-markdown>
+## Explicitly create merge commit
+Sometimes you want a merge commit, even when a simple Fast Forward is possible.
+
+    git merge --no-ff
+</section>
+</section>
+
+<section data-markdown>
+## Try it
+1. Create a new branch and check it out
+1. Edit a file and commit
+1. Checkout the master branch
+1. Merge the file
+1. Edit files on both branches
+1. Merge both branches
+</section>
+<section data-markdown>
+## Try it
+1. Edit files on both branches, introducing conflicts
+1. Merge both branches
+1. Resolve the conflicts
+1. Commit
+</section>
+<section>
+
+<section data-markdown>
+## Inspecting an earlier commit
+### Show
+
+    git show 2a2ea8d
+    git show HEAD^^
+
+Gives you a **diff** of what exactly that commit changed **+ metadata** for that commit
+</section>
+<section data-markdown>
+## Inspecting an earlier commit
+### Checkout
+You can checkout a commit to see the repository as it was back then
+
+    git checkout &lt;commit-hash&gt;
+
+**Note**: Git will tell you that you are in a _detached head_ state, because your HEAD reference
+doesn't point to any branch.
+</section>
+<section data-markdown>
+## Resetting to an earlier commit
+
+You can reset your branch to an earlier commit, to throw away the newer commit(s).
+
+    git reset HEAD^^
+
+This will change the reference for the branch to that commit
+
+**Note**: only do this if you have not yet pushed these newer commits
+</section>
+<section data-markdown>
+## Reflog
+The reflog is a log of everything which happened in your repository
+
+    git reflog
+
+Useful when you make a mistake during rebasing, merging or resetting.
+
+Your old commits are not 'lost'. They are simply not used anymore and will be removed by `git gc` after a while.
+</section>
+<section data-markdown>
+## Try it
+1. edit a file
+1. commit
+1. reset to the previous commit
+1. use the reflog to find the newer commit
+1. reset back to the newer commit (no more changes)
+1. reset back to older
+1. make additional changes to the file
+1. commit the file
+1. check the reflog
+</section>
+
+<section data-markdown>
+# Rebasing
+Instead of merging (with merge commits) you can also rebase (so you can then fast forward)
+
+Some people will tell you that this is very harmful, it can break your repository and destroy the universe.  
+This is **NOT TRUE**. (At least if you know what you are doing)
+</section>
+<section data-markdown>
+## What is 'rebasing'?
+
+By rebasing your commits you can actually rewrite your history:
+
+* Edit a commit message
+* Add missing files to a commit
+* Reorder your commits
+* Modify the parent of a commit
+* Merge a few commits together into a single commit
+* Delete commits from the history
+* ...
+* And break your repository if you want :)
+
+</section>
+<section data-markdown>
+## How not to destroy your repository?
+</section>
+<section>
+<span style="font-size: 150%; ">Do <strong>not</strong> rebase commits which have already been pushed to other people</span>
+</section>
+<section>
+<span style="font-size: 150%; ">Do <strong>not</strong> rebase commits which have already been pushed to other people</span>
+</section>
+<section>
+<span style="font-size: 150%; ">Do <strong>not</strong> rebase commits which have already been pushed to other people</span>
+</section>
+<section data-markdown>
+Each commit which is rebased will get a new, different, hash. People (and Git) which pull this new hash will get confused.
+
+If you do rebase a commit which was already pushed, Git will refuse the new commit, unless you use the `--force` option.
+</section>
+<section data-markdown>
+## Amending changes
+
+* The easiest and 'safest' kind of rebase 
+* Only possible for the most recent commit
+* Let's you add missing files and modify the commit message  
+
+After modifying your index again:
+
+    git commit --amend
+
+</section>
+<section data-markdown>
+## Rebasing on top of another branch
+
+This is an alternative approach to merging, with a merge commit.
+
+Let's reuse the example:
+
+![git-05](images/git-05.png)
+
+Now you  want to merge 'mywork' into 'origin' without creating a merge commit
+
+</section>
+<section data-markdown>
+What we did before:
+
+    git checkout origin
+    git merge mywork
+
+What we will do now:
+
+    # on the mywork branch
+    git rebase origin
+    # fix any merge conflicts
+    git checkout origin
+    git merge mywork
+
+</section>
+<section data-markdown>
+
+    # on the mywork branch
+    git rebase origin
+
+![git-08](images/git-08.png)
+</section>
+<section data-markdown>
+![git-09](images/git-09.png)
+</section>
+<section data-markdown>
+![git-10](images/git-10.png)
+</section>
+<section data-markdown>
+## Interactive rebasing
+With interactive rebasing you can really rewrite history the way you want it to be. ...And break your repository.
+
+Rebase the commits since the specified commit-hash
+
+    git rebase --interactive &lt;commit-hash&gt;
+</section>
+<section data-markdown>
+Suppose we have the following commits
+
+![git-11](images/git-11.png)
+</section>
+<section data-markdown>
+To rebase the most recent 3 commits:
+
+    git rebase --interactive 4efd195
+
+![git-12](images/git-12.png)
+</section>
+</section>
+<section data-markdown>
+## Try it
+1. edit a file and commit
+1. edit the file again
+1. commit the file with the `--amend` option
+</section>
+<section data-markdown>
+## Try it
+1. create and checkout a branch
+1. edit a file and commit
+1. checkout the master branch
+1. edit the same file and commit
+1. do a merge
+1. check the log
+1. undo the merge (reset &amp; checkout)
+1. checkout the branch
+1. rebase the branch on top of master
+1. checkout master and merge
+1. check the log
+1. Bonus: delete the merged branch
+</section>
+
+<section>
+<section data-markdown>
+# Sharing code
+</section>
+<section data-markdown>
+## Remotes
+To share work with other people, you can add one or more remotes
+
+* remotes have an address
+* remotes have a name
+* you can add multiple remotes to a repository
+</section>
+<section data-markdown>
+Easiest method to set this up is by cloning an existing repository instead of initializing your repo.
+
+    git clone http://git.drupal.org/project/drupal.git
+
+![git-14](images/git-14.png)
+
+This will set up everything for you
+</section>
+<section data-markdown>
+## Manually adding remotes
+
+Sometimes you will want to add a remote
+
+* Because you had already created the repository
+* Or maybe because you want to add one or more additional remotes
+
+</section>
+<section data-markdown>
+## Adding a remote
+This is done with the `git remote` command
+
+    git remote add github git@github.com:teranex/git-talk.git
+
+This will add my Github repository for this presentation as a remote with the name _github_
+</section>
+<section data-markdown>
+## Tip: pretty url's for remotes
+You can add shortcuts in your git config for often used url's
+
+    git config --global url.git@github.com.insteadOf gh
+    git config --global url.ssh://myuser@mydomain.net/path/to/repos/.insteadOf r
+
+Then you can use short url's to clone
+
+    git clone gh:teranex/dotvim
+    git clone r:myrepo.git
+</section>
+<section data-markdown>
+## Pulling and pushing
+
+When you have cloned the repository:
+
+    git pull
+
+This will pull in the changes from the current branch on the origin
+
+    git push
+
+Will push your changes to the origin
+
+**However**: This will only work for '_tracking_' branches.
+</section>
+<section data-markdown>
+## Remote Branches
+
+It is important to think about remote branches as just _branches_
+
+By default, Git does not know, nor care, about relationships between branches!
+</section>
+<section data-markdown>
+* local branch: **master**
+* remote ('github') branch: **github/master**
+* **Git just sees two branches**  
+
+    `git pull github master`  
+    `git push github master`
+
+* By default, no local branches are created for remote branches
+</section>
+<section data-markdown>
+## Remote Branches
+
+You can get a good overview of all your local and remote branches and how they are tracking with:
+    git branch -avv
+
+![img-19](images/git-19.png)
+</section>
+<section data-markdown>
+## Tracking branches
+
+To create a local branch based on a remote branch:
+
+    git checkout --track -b mywork github/mywork
+
+To link an existing local branch to a remote branch:
+
+    git branch --setup-stream github/mywork
+
+You can verify this in the git config file (.git/config) in your repository:
+
+![git-15](images/git-15.png)
+</section>
+<section data-markdown>
+## Merging while pulling
+
+To better understand pulling, let's see what actually happens. Instead of using `git pull`, you also do (while on the master branch):
+
+    # pull in the new objects
+    git fetch github
+
+    # merge the remote branch with the local branch
+    git merge github/master
+
+This works exactly the same as merging two local branches!  
+</section>
+<section data-markdown>
+## Avoiding useless merge commits
+
+Merging a remote branch in your local branch can create a useless merge commit:
+
+![git-16](images/git-16.png)
+
+You can avoid this by rebasing instead of merging:
+
+    git pull --rebase
+
+or, if you want to do it manually:
+
+    git fetch github
+    git rebase github/master
+
+</section>
+</section>
+<section data-markdown>
+## Try it
+1. Clone a repository
+1. Checkout a remote branch (you are now in a detached head state)
+1. Create a local branch for the remote branch
+</section>
+<section>
+<section data-markdown>
+# Stash
+</section>
+<section data-markdown>
+Sometimes you want to set aside your changes
+
+* because you want to rebase (which is not possible in a dirty repository)
+* to try alternative approaches
+* ...
+</section>
+<section data-markdown>
+## Stashing
+to stash everything
+
+    git stash
+
+Or you can give a description
+
+    git stash save "something fancy I was working on"
+
+</section>
+<section data-markdown>
+## Stashing
+to see the stashes
+
+    git stash list
+
+to get changes back from the stash
+
+    git stash pop
+</section>
+<section data-markdown>
+I often use the stash when I want to `git pull --rebase`, while I have uncommitted changes (git will refuse to do it in that case):
+
+    git stash
+    git pull --rebase
+    git stash pop
+</section>
+</section>
+
+<section data-markdown>
+## Try it
+1. make some edits
+1. stash them
+1. unstash them
+</section>
+
+
+<section>
+<section data-markdown>
+# Tools
+</section>
+<section data-markdown>
+## GUI tools
+
+* TortoiseGit
+* Github for Windows
+* Giggle
+* Tig
+* Fugitive
+* IDE integration
+</section>
+<section data-markdown>
+## Giggle &amp; GitX: better looking, for Gnome &amp; Mac
+
+![git-17](images/git-17.png)
+</section>
+<section data-markdown>
+## Fugitive and gitv plugins for Vim
+![tools-2](images/tools-2.png)
+</section>
+<section data-markdown>
+## bash prompt information  
+  Include `$(__git_ps1 '  %s  ')` in your $PS1
+![tools-3](images/tools-3.png)
+</section>
+</section>
+
+<section>
+<section data-markdown>
+# Git and Subversion
+
+Git has plugins available to migrate from and/or integrate into other versioning systems as well. One such plugin is **git-svn**.
+</section>
+<section data-markdown>
+## git-svn
+With git-svn you can:
+
+* migrate an existing subversion repository to a git repository, including all the history.
+* use Git locally to do your work, but push to a central Subversion server.
+</section>
+<section data-markdown>
+## Local Git, Subversion server
+To locally use Git and push to a central Subversion server:
+
+First 'clone' the Subversion repository into a local Git repo
+
+    git svn clone -s http://svn.example.com/myproject
+    # the -s means the subversion repo has a standard layout (trunk/ etc)
+</section>
+<section data-markdown>
+Now you can work as usual with your Git repository. Except... instead of running ``git pull`` to get the changes from other people, you now do:
+
+    git svn rebase
+
+And you don't do ``git push``, but:
+
+    git svn dcommit
+</section>
+</section>
+
+<section>
+<section data-markdown>
+# Git Flow
+</section>
+<section data-markdown>
+![git-20](images/git-20.png)
+</section>
+<section data-markdown>
+To use the '[Git Flow](https://github.com/nvie/gitflow)' branching strategy a Git plugin is available: git-flow. This plugin makes it really easy to follow Git Flow:
+
+First initialize it to configure the names. (I recommend to use the defaults)
+
+    git flow init
+</section>
+<section data-markdown>
+To start a feature branch:
+
+    git flow feature start my-exiting-feature
+
+To publish the feature (push it to the remote)
+
+    git flow feature publish my-exiting-feature
+
+To finalize the branch:
+
+    git flow feature finish my-exiting-feature
+</section>
+</section>
+
+<section>
+<section data-markdown>
+# Submodules
+In a Git repository you can 'link' other repositories to subdirectories. This can be useful, for example when using external libraries or when building your VIM configuration, to pull in all the plugins.
+</section>
+<section data-markdown>
+Similar to svn:externals, but not quite the same:
+
+* submodules must be registered in the repository
+* submodules must be pulled-in separately for each repo.
+* submodules are not updated automatically
+* submodules are not pushed automatically
+* a specific commit is referenced in the parent repo
+</section>
+<section data-markdown>
+## Add a submodule
+
+    # from the root of the repository
+    git submodule add git://path/to/repo path/in/repo
+
+This will modify the .gitmodules file, which is part of the parent repository, and record the exact commit which is checked out in the submodule.
+Now you can commit, push, etc.
+</section>
+<section data-markdown>
+## Pulling in submodules
+
+When another repository pulls in the change the following steps are required:
+
+    git submodule init
+
+This will update the .git/config file for that repository and register the submodule in the repository
+
+    git submodule update
+
+This will check-out all the submodules to the correct commit
+
+    # or combine both steps
+    git submodule update --init
+</section>
+<section data-markdown>
+## Updating submodules
+To update you can checkout another commit in the submodule (for example by pulling) and commit the reference to this new commit in the parent repository.
+
+To update all the modules, you can use something like:
+
+    git submodule foreach git pull origin master
+</section>
+</section>
+
+<section data-markdown>
+# Try it
+1. Create a new repo with a commit
+1. Add it as a submodule of your main repo
+1. Make some changes in the Submodule
+1. Check the status of the main repo
+1. Commit in the Submodule
+1. Check the status of the main repo
+1. Commit the updated main repo to point to the ne commit in the  submodule
+</section>
+
+<section>
+<section data-markdown>
+# Bisect
+Helping you to find which commit introduced the bug
+</section>
+<section data-markdown>
+Sometimes somebody will introduce bugs into your software or brake previously working features. Who knows, maybe even you! While trying to find the source of the problem, it can be useful to know which commit exactly introduced the troubles in paradise. That is exactly what Git bisect is for.
+</section>
+<section data-markdown>
+## Steps for bisecting
+1. Inform Git about one 'good' commit
+1. And about one 'bad' commit
+1. Git will checkout a commit for you
+1. Verify that commit
+1. Tell Git whether that commit has the problem ('bad'), or not ('good')
+1. Finally the 'bad' commit will be found
+</section>
+<section data-markdown>
+## an example
+Let's say you know the feature was already broken in the previous commit and 10 commits ago the feature still worked.
+</section>
+<section data-markdown>
+Start Git Bisect and inform Git about this:
+
+    git bisect start
+    git bisect bad HEAD^
+    git bisect good HEAD~10
+</section>
+<section data-markdown>
+Git will checkout the commit in the middle, so you can test:
+
+    Bisecting: 5 revisions left to test after this (roughly 3 steps)
+</section>
+<section data-markdown>
+After testing you inform Git about the result
+
+    git bisect good # when the feature worked
+    git bisect bad  # when the feature is b0rken
+</section>
+<section data-markdown>
+After you have found the bad commit, reset your repository:
+
+    git bisect reset
+
+If you write a script which can verify each commit, you can let Git run it for every commit!
+</section>
+<section data-markdown>
+# Try it
+1. Find the commit which changed `A tree is a like a **directory**` into `A tree is like a **directory**`
+</section>
+</section>
+
+<section>
+<section>
+<h1>Github</h1>
+<img src="images/octocat.png" style="background: transparent; width: 300px; box-shadow: 0 0 0 0;">
+</section>
+<section data-markdown>
+* Creating a repo
+* Using the issue tracker
+* Forking vs shared repository
+* Pull requests (via website / local)
+* Syncing forks
+</section>
+</section>
+
+<section data-markdown>
+# Suggested reading
+
+* the git man-pages
+* the .git-folder of a repository (just take a look, it's interesting)
+* Pro Git: [http://progit.org/](http://progit.org/)
+* The Git Community Book: [http://book.git-scm.com/](http://book.git-scm.com/)
+* StackOverflow: [http://stackoverflow.com](http://stackoverflow.com/questions/tagged/git) has a lot of valuable questions and answers related to Git.
+</section>
+
+<section data-markdown>
+# The end
+</section>
+      </div>
+    </div>
+
+    <script src="reveal/lib/js/head.min.js"></script>
+    <script src="reveal/js/reveal.min.js"></script>
+
+    <script>
+
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/none
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+        { src: 'reveal/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+        { src: 'reveal/plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+        { src: 'reveal/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+        { src: 'reveal/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+        { src: 'reveal/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+        // { src: 'reveal/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+        // { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+      });
+
+    </script>
+
+  </body>
+</html>
