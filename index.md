@@ -5,7 +5,7 @@ title: Git Training
 
 ## Who am I?
 * Jeroen Budts
-* PHP & Drupal Developer
+* Developer / Project Manager
 * At [Inuits](http://inuits.eu) - An Open Source Consultancy Company
 * [http://budts.be](http://budts.be)
 * twitter: @teranex
@@ -17,12 +17,9 @@ title: Git Training
 
 * Basic Git usage
 * How Git stores it's stuff
-* More advanced Git usage
-(branching, merging, rebasing, ..)
+* Normal Git usage: _branching, merging, rebasing, .._
 * Working with remotes
-* Other tools (Subversion integration etc)
-* Git flow
-* Github
+* Some more advanced things: _subversion, submodules, bisect, stash_
 
 # What is Git?
 
@@ -79,7 +76,9 @@ And commit:
 
     git commit
 
-## Or skip the staging step and immediately commit:
+## Skip staging
+
+Or skip the staging step and immediately commit:
 
     git commit -a
 
@@ -818,7 +817,8 @@ Sometimes you want to set aside your changes
 * to try alternative approaches
 * ...
 
-## Stashing
+---
+
 to stash everything
 
     git stash
@@ -827,7 +827,8 @@ Or you can give a description
 
     git stash save "something fancy I was working on"
 
-## Stashing
+---
+
 to see the stashes
 
     git stash list
@@ -849,34 +850,6 @@ I often use the stash when I want to `git pull --rebase`, while I have uncommitt
 1. stash them
 1. unstash them
 
-
-# Git and Subversion
-
-Git has plugins available to migrate from and/or integrate into other versioning systems as well. One such plugin is **git-svn**.
-
-## git-svn
-With git-svn you can:
-
-* migrate an existing subversion repository to a git repository, including all the history.
-* use Git locally to do your work, but push to a central Subversion server.
-
-## Local Git, Subversion server
-To locally use Git and push to a central Subversion server:
-
-First 'clone' the Subversion repository into a local Git repo
-
-    git svn clone -s http://svn.example.com/myproject
-    # the -s means the subversion repo has a standard layout (trunk/ etc)
-
----
-
-Now you can work as usual with your Git repository. Except... instead of running ``git pull`` to get the changes from other people, you now do:
-
-    git svn rebase
-
-And you don't do ``git push``, but:
-
-    git svn dcommit
 
 # Submodules
 
@@ -966,7 +939,8 @@ Start Git Bisect and inform Git about this:
 
 Git will checkout the commit in the middle, so you can test:
 
-    Bisecting: 5 revisions left to test after this (roughly 3 steps)
+    Bisecting: 5 revisions left to test after this
+    (roughly 3 steps)
 
 ---
 
@@ -985,6 +959,37 @@ If you write a script which can verify each commit, you can let Git run it for e
 
 ## Try it
 1. Find the commit which changed `A tree is a like a **directory**` into `A tree is like a **directory**`
+
+# Git and Subversion
+
+Git has plugins available to migrate from and/or integrate into other versioning systems as well. One such plugin is **git-svn**.
+
+## git-svn
+With git-svn you can:
+
+* migrate an existing subversion repository to a git repository, including all the history.
+* use Git locally to do your work, but push to a central Subversion server.
+
+## Local Git, Subversion server
+To locally use Git and push to a central Subversion server:
+
+First 'clone' the Subversion repository into a local Git repo
+
+```zsh
+git svn clone -s http://svn.example.com/myproject
+# the -s means the subversion repo has a
+# standard layout (trunk/ etc)
+```
+
+---
+
+Now you can work as usual with your Git repository. Except... instead of running ``git pull`` to get the changes from other people, you now do:
+
+    git svn rebase
+
+And you don't do ``git push``, but:
+
+    git svn dcommit
 
 # Suggested reading
 

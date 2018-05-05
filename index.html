@@ -73,7 +73,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h2>Who am I?</h2>
 <ul>
 <li>Jeroen Budts</li>
-<li>PHP &amp; Drupal Developer</li>
+<li>Developer / Project Manager</li>
 <li>At <a href="http://inuits.eu">Inuits</a> - An Open Source Consultancy Company</li>
 <li><a href="http://budts.be" class="uri">http://budts.be</a></li>
 <li>twitter: <span class="citation" data-cites="teranex">@teranex</span></li>
@@ -85,11 +85,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <ul>
 <li>Basic Git usage</li>
 <li>How Git stores it's stuff</li>
-<li>More advanced Git usage (branching, merging, rebasing, ..)</li>
+<li>Normal Git usage: <em>branching, merging, rebasing, ..</em></li>
 <li>Working with remotes</li>
-<li>Other tools (Subversion integration etc)</li>
-<li>Git flow</li>
-<li>Github</li>
+<li>Some more advanced things: <em>subversion, submodules, bisect, stash</em></li>
 </ul>
 </section></section>
 <section><section id="what-is-git" class="titleslide slide level1"><h1>What is Git?</h1></section><section class="slide level2">
@@ -132,8 +130,9 @@ git add directory/</code></pre></div>
 <pre><code>git add file.txt</code></pre>
 <p>And commit:</p>
 <pre><code>git commit</code></pre>
-</section><section id="or-skip-the-staging-step-and-immediately-commit" class="slide level2">
-<h2>Or skip the staging step and immediately commit:</h2>
+</section><section id="skip-staging" class="slide level2">
+<h2>Skip staging</h2>
+<p>Or skip the staging step and immediately commit:</p>
 <pre><code>git commit -a</code></pre>
 </section><section id="removing-a-file" class="slide level2">
 <h2>Removing a file</h2>
@@ -765,14 +764,14 @@ git clone r:myrepo.git</code></pre>
 <li>to try alternative approaches</li>
 <li>...</li>
 </ul>
-</section><section id="stashing" class="slide level2">
-<h2>Stashing</h2>
+</section><section class="slide level2">
+
 <p>to stash everything</p>
 <pre><code>git stash</code></pre>
 <p>Or you can give a description</p>
 <pre><code>git stash save &quot;something fancy I was working on&quot;</code></pre>
-</section><section id="stashing-1" class="slide level2">
-<h2>Stashing</h2>
+</section><section class="slide level2">
+
 <p>to see the stashes</p>
 <pre><code>git stash list</code></pre>
 <p>to get changes back from the stash</p>
@@ -790,26 +789,6 @@ git stash pop</code></pre>
 <li>stash them</li>
 <li>unstash them</li>
 </ol>
-</section></section>
-<section><section id="git-and-subversion" class="titleslide slide level1"><h1>Git and Subversion</h1></section><section id="git-svn" class="slide level2">
-<h2>git-svn</h2>
-<p>With git-svn you can:</p>
-<ul>
-<li>migrate an existing subversion repository to a git repository, including all the history.</li>
-<li>use Git locally to do your work, but push to a central Subversion server.</li>
-</ul>
-</section><section id="local-git-subversion-server" class="slide level2">
-<h2>Local Git, Subversion server</h2>
-<p>To locally use Git and push to a central Subversion server:</p>
-<p>First 'clone' the Subversion repository into a local Git repo</p>
-<pre><code>git svn clone -s http://svn.example.com/myproject
-# the -s means the subversion repo has a standard layout (trunk/ etc)</code></pre>
-</section><section class="slide level2">
-
-<p>Now you can work as usual with your Git repository. Except... instead of running <code>git pull</code> to get the changes from other people, you now do:</p>
-<pre><code>git svn rebase</code></pre>
-<p>And you don't do <code>git push</code>, but:</p>
-<pre><code>git svn dcommit</code></pre>
 </section></section>
 <section><section id="submodules" class="titleslide slide level1"><h1>Submodules</h1></section><section class="slide level2">
 
@@ -883,7 +862,8 @@ git bisect good HEAD~10</code></pre>
 </section><section class="slide level2">
 
 <p>Git will checkout the commit in the middle, so you can test:</p>
-<pre><code>Bisecting: 5 revisions left to test after this (roughly 3 steps)</code></pre>
+<pre><code>Bisecting: 5 revisions left to test after this
+(roughly 3 steps)</code></pre>
 </section><section class="slide level2">
 
 <p>After testing you inform Git about the result</p>
@@ -899,6 +879,27 @@ git bisect bad  # when the feature is b0rken</code></pre>
 <ol type="1">
 <li>Find the commit which changed <code>A tree is a like a **directory**</code> into <code>A tree is like a **directory**</code></li>
 </ol>
+</section></section>
+<section><section id="git-and-subversion" class="titleslide slide level1"><h1>Git and Subversion</h1></section><section id="git-svn" class="slide level2">
+<h2>git-svn</h2>
+<p>With git-svn you can:</p>
+<ul>
+<li>migrate an existing subversion repository to a git repository, including all the history.</li>
+<li>use Git locally to do your work, but push to a central Subversion server.</li>
+</ul>
+</section><section id="local-git-subversion-server" class="slide level2">
+<h2>Local Git, Subversion server</h2>
+<p>To locally use Git and push to a central Subversion server:</p>
+<p>First 'clone' the Subversion repository into a local Git repo</p>
+<div class="sourceCode"><pre class="sourceCode zsh"><code class="sourceCode zsh">git svn <span class="kw">clone</span> -s http://svn.example.com/myproject
+<span class="co"># the -s means the subversion repo has a</span>
+<span class="co"># standard layout (trunk/ etc)</span></code></pre></div>
+</section><section class="slide level2">
+
+<p>Now you can work as usual with your Git repository. Except... instead of running <code>git pull</code> to get the changes from other people, you now do:</p>
+<pre><code>git svn rebase</code></pre>
+<p>And you don't do <code>git push</code>, but:</p>
+<pre><code>git svn dcommit</code></pre>
 </section></section>
 <section><section id="suggested-reading" class="titleslide slide level1"><h1>Suggested reading</h1></section><section class="slide level2">
 
