@@ -4,18 +4,18 @@ This repository uses a submodule to pull in reveal.js, so after cloning you stil
 ```bash
 git submodule update --init
 ```
+# Start
 
+To start the presentation, open `index.html` in your webbrowser.
 
-# Reveal.js template
+# Build
 
-This is a very simple repository which can be used to start a new reveal.js
-presentation.
-To keep everything clean it puts the actual reveal.js files in a subdirectory
-(reveal/) which is a git submodule. This allows for easy updating of reveal.js
-and doesn't mix your own files with the reveal files.
+When making changes to the sourcefile (`index.md`) you need to rebuild the
+presentation. To do this make sure you have installed
+[Pandoc](http://pandoc.org/).
 
-## Known problems
-There is currently one known problem with this setup: it breaks the sidenotes,
-as the sidenotes html file is not where reveal.js expects it to be.
+Then run:
 
-%% vim: textwidth=80 wrap
+```
+./build
+```
