@@ -184,11 +184,11 @@ git add directory/</code></pre></div>
 </figure>
 </section><section id="seeing-what-has-changed" class="slide level2">
 <h2>Seeing what has changed</h2>
-<pre><code>git diff  
-# shows the diff of your working copy
+<div class="sourceCode"><pre class="sourceCode zsh"><code class="sourceCode zsh">    git <span class="kw">diff</span>  
+    <span class="co"># shows the diff of your working copy</span>
 
-git diff --cached
-# show the diff of your index</code></pre>
+    git <span class="kw">diff</span> --cached
+    <span class="co"># show the diff of your index</span></code></pre></div>
 <p><strong>Tip</strong>: use a tool for this</p>
 </section><section id="the-log" class="slide level2">
 <h2>The log</h2>
@@ -208,11 +208,11 @@ git diff --cached
 </section><section class="slide level2">
 
 <p><strong>Tip</strong>: add this in your global gitconfig as an alias:</p>
-<pre><code>[alias]
-    l = log --graph --pretty=format:&#39;%Cred%h%Creset
-        -%C(yellow)%d%Creset %s %Cgreen(%cr)
-        %C(bold blue)&lt;%an&gt;%Creset&#39; --abbrev-commit
-        --date=relative    </code></pre>
+<div class="sourceCode"><pre class="sourceCode ini"><code class="sourceCode ini"><span class="dt">    </span><span class="kw">[alias]</span>
+<span class="dt">        l </span><span class="ot">=</span><span class="st"> log --graph --pretty=format:&#39;%Cred%h%Creset</span>
+<span class="dt">            -%C(yellow)%d%Creset %s %Cgreen(%cr)</span>
+<span class="dt">            %C(bold blue)&lt;%an&gt;%Creset&#39; --abbrev-commit</span>
+<span class="dt">            --date</span><span class="ot">=</span><span class="st">relative    </span></code></pre></div>
 </section><section class="slide level2">
 
 <p>See the log of all the branches:</p>
@@ -235,9 +235,9 @@ git diff --cached
 </section></section>
 <section><section id="undoing-things" class="titleslide slide level1"><h1>Undoing things</h1></section><section id="undoing-changes-to-a-file" class="slide level2">
 <h2>Undoing changes to a file</h2>
-<pre><code>git checkout -- file.txt
-# the -- are optional, to tell git it&#39;s about a file
-git checkout directory/</code></pre>
+<div class="sourceCode"><pre class="sourceCode zsh"><code class="sourceCode zsh">    git checkout -- file.txt
+    <span class="co"># the -- are optional, to tell git it&#39;s about a file</span>
+    git checkout directory/</code></pre></div>
 <p>But <strong>not</strong></p>
 <pre><code>git checkout branch-name</code></pre>
 <p><strong>Note</strong>: This gets back the version from the <strong>index</strong>. If the file is not in the index, it will get the file from the repository.</p>
@@ -250,17 +250,17 @@ git checkout directory/</code></pre>
 <p>To completely reset it to the version in the repository.</p>
 </section><section id="removing-unversioned-files" class="slide level2">
 <h2>Removing unversioned files</h2>
-<pre><code>git clean -f
-# to remove untracked files
+<div class="sourceCode"><pre class="sourceCode zsh"><code class="sourceCode zsh">git clean -f
+<span class="co"># to remove untracked files</span>
 
 git clean -f -d
-# to remove untracked directories</code></pre>
+<span class="co"># to remove untracked directories</span></code></pre></div>
 </section><section id="completely-resetting-your-working-copy" class="slide level2">
 <h2>Completely resetting your working copy</h2>
-<pre><code>git reset --hard
+<div class="sourceCode"><pre class="sourceCode zsh"><code class="sourceCode zsh">git reset --hard
 
-# optionally followed by
-git clean -f</code></pre>
+<span class="co"># optionally followed by</span>
+git clean -f</code></pre></div>
 <p><strong>Use with care!</strong></p>
 </section><section id="reverting-a-commit" class="slide level2">
 <h2>Reverting a commit</h2>
@@ -587,8 +587,8 @@ This is <strong>NOT TRUE</strong>. (At least if you know what you are doing)</p>
     git merge mywork</code></pre></div>
 </section><section class="slide level2">
 
-<pre><code># on the mywork branch
-git rebase origin</code></pre>
+<div class="sourceCode"><pre class="sourceCode zsh"><code class="sourceCode zsh">    <span class="co"># on the mywork branch</span>
+    git rebase origin</code></pre></div>
 <figure>
 <img src="images/git-08.png" alt="git-08" /><figcaption>git-08</figcaption>
 </figure>
@@ -748,13 +748,7 @@ git clone r:myrepo.git</code></pre>
 <p>or, if you want to do it manually:</p>
 <div class="sourceCode"><pre class="sourceCode zsh"><code class="sourceCode zsh">    git fetch github
     git rebase github/master</code></pre></div>
-</section><section id="try-it-9" class="slide level2">
-<h2>Try it</h2>
-<ol type="1">
-<li>Clone a repository</li>
-<li>Checkout a remote branch (you are now in a detached head state)</li>
-<li>Create a local branch for the remote branch</li>
-</ol>
+<p>%% ## Try it %% 1. Clone a repository %% 1. Checkout a remote branch (you are now in a detached head state) %% 1. Create a local branch for the remote branch</p>
 </section></section>
 <section><section id="stash" class="titleslide slide level1"><h1>Stash</h1></section><section class="slide level2">
 
@@ -782,7 +776,7 @@ git clone r:myrepo.git</code></pre>
 <pre><code>git stash
 git pull --rebase
 git stash pop</code></pre>
-</section><section id="try-it-10" class="slide level2">
+</section><section id="try-it-9" class="slide level2">
 <h2>Try it</h2>
 <ol type="1">
 <li>make some edits</li>
@@ -822,7 +816,7 @@ git submodule update --init</code></pre>
 <p>To update you can checkout another commit in the submodule (for example by pulling) and commit the reference to this new commit in the parent repository.</p>
 <p>To update all the modules, you can use something like:</p>
 <pre><code>git submodule foreach git pull origin master</code></pre>
-</section><section id="try-it-11" class="slide level2">
+</section><section id="try-it-10" class="slide level2">
 <h2>Try it</h2>
 <ol type="1">
 <li>Create a new repo with a commit</li>
@@ -874,7 +868,7 @@ git bisect bad  # when the feature is b0rken</code></pre>
 <p>After you have found the bad commit, reset your repository:</p>
 <pre><code>git bisect reset</code></pre>
 <p>If you write a script which can verify each commit, you can let Git run it for every commit!</p>
-</section><section id="try-it-12" class="slide level2">
+</section><section id="try-it-11" class="slide level2">
 <h2>Try it</h2>
 <ol type="1">
 <li>Find the commit which changed <code>A tree is a like a **directory**</code> into <code>A tree is like a **directory**</code></li>

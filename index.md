@@ -150,11 +150,13 @@ Checking the state of the working copy
 
 ## Seeing what has changed
 
+```zsh
     git diff  
     # shows the diff of your working copy
 
     git diff --cached
     # show the diff of your index
+```
 
 **Tip**: use a tool for this
 
@@ -182,11 +184,13 @@ results in:
 
 **Tip**: add this in your global gitconfig as an alias:
 
+```ini
     [alias]
         l = log --graph --pretty=format:'%Cred%h%Creset
             -%C(yellow)%d%Creset %s %Cgreen(%cr)
             %C(bold blue)<%an>%Creset' --abbrev-commit
             --date=relative    
+```
 
 ---
 
@@ -209,9 +213,11 @@ See the log of all the branches:
 # Undoing things
 ## Undoing changes to a file
 
+```zsh
     git checkout -- file.txt
     # the -- are optional, to tell git it's about a file
     git checkout directory/
+```
 
 But **not**
 
@@ -235,18 +241,22 @@ To completely reset it to the version in the repository.
 
 ## Removing unversioned files
 
-    git clean -f
-    # to remove untracked files
+```zsh
+git clean -f
+# to remove untracked files
 
-    git clean -f -d
-    # to remove untracked directories
+git clean -f -d
+# to remove untracked directories
+```
 
 ## Completely resetting your working copy
 
-    git reset --hard
+```zsh
+git reset --hard
 
-    # optionally followed by
-    git clean -f
+# optionally followed by
+git clean -f
+```
 
 **Use with care!**
 
@@ -603,8 +613,10 @@ What we will do now:
 
 ---
 
+```zsh
     # on the mywork branch
     git rebase origin
+```
 
 ![git-08](images/git-08.png)
 
@@ -802,10 +814,10 @@ or, if you want to do it manually:
     git rebase github/master
 ```
 
-## Try it
-1. Clone a repository
-1. Checkout a remote branch (you are now in a detached head state)
-1. Create a local branch for the remote branch
+%% ## Try it
+%% 1. Clone a repository
+%% 1. Checkout a remote branch (you are now in a detached head state)
+%% 1. Create a local branch for the remote branch
 
 # Stash
 
